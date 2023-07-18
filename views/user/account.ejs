@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zosko | Template</title>
+
+    <script>
+      window.onload = () => {
+        pageSwitch('/profile');
+      }
+    </script>
+</head>
+<body>
+    <!doctype html>
+<html lang="en">
+
+<!-- Mirrored from themeforesight.netlify.app/index-ecommerce.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 01 Jul 2023 05:39:30 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<style>
+    body {
+      background-color: white;
+    }
+</style>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Zosko | Account</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Theme styles -->
+  <link rel="stylesheet" type="text/css" href="/css/theme.min.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" type="text/css" href="../cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Vendor -->
+  <link rel="stylesheet" type="text/css" href="/css/vendor.min.css">
+</head>
+
+<body>
+  <nav style="background-color: #e7ab3c;" class="navbar navbar-vertical navbar-expand-lg navbar-light fw-bold" role="navigation">
+    <div class="container-fluid">
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <h2 class="text-white text-center p-2">Account</h2>
+
+      <!-- <div class="dropdown d-flex d-lg-none">
+        <div class="dropdown-menu dropdown-menu-end">
+          <a class="dropdown-item" href="profile.html">My profile</a>
+          <a class="dropdown-item" href="account.html">Account settings</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="sign-in.html">Log out</a>
+        </div>
+      </div> -->
+
+      <div class="collapse navbar-collapse mt-md-2" id="navbar-collapse">
+        <ul class="navbar-nav" id="sidebar-nav">
+          <li class="nav-item">
+            <button onclick="pageSwitch('/profile')" class="text-white nav-link bg-transparent border-0" aria-expanded="true" aria-controls="sidebar-blogs">
+              Profile
+            </button>
+          </li>
+
+          <li class="nav-item">
+            <button onclick="pageSwitch('/orders')" class="text-white nav-link bg-transparent border-0" aria-expanded="" aria-controls="sidebar-subs">
+              Orders
+            </button>
+          </li> 
+
+          <li class="nav-item">
+            <button onclick="pageSwitch('/address')" class="text-white nav-link bg-transparent border-0" aria-expanded="" aria-controls="sidebar-pages">
+              Address
+            </button>
+          </li>
+        </ul>
+        <a href="/user/logout" class="bg-transparent border-0 btn btn-light btn-lg d-none d-lg-block mt-2 mt-lg-auto mb-3" style="transform: rotateY(180deg);" data-toggle="sidebar"  data-sidebar="lg">
+          <span class="svg-icon text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><title>ionicons-v5-j</title><path d="M176,176V136a40,40,0,0,1,40-40H424a40,40,0,0,1,40,40V376a40,40,0,0,1-40,40H216a40,40,0,0,1-40-40V336" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/><polyline points="272 336 352 256 272 176" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/><line x1="48" y1="256" x2="336" y2="256" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+  <div class="main-content bg-white" id="mainContent">
+  </div>
+
+  <script src="/js/axios.min.js"></script>
+  <script>
+    //account side
+    async function pageSwitch(url) {
+        try {
+            const response = await axios.get(url);
+            if (response.status === 200) {
+                document.getElementById('mainContent').innerHTML = response.data;
+            }
+        } catch(err) {
+            document.getElementById('mainContent').innerHTML = err.response.data.error;
+        }
+    }
+
+    //profile side
+    function edit(cancel, edit, save, id1, id2) {
+      document.getElementById(edit).hidden = true;
+      document.getElementById(cancel).hidden = false;
+      const saveButton = document.getElementById(save);
+      saveButton.hidden = false;
+      if (id1) {
+       document.getElementById(id1).removeAttribute("disabled");
+       if (document.getElementById(id1).type === "password") {
+        document.getElementById(id1).value = "";
+        document.getElementById(id2).removeAttribute("hidden");
+        document.getElementById('resetButton').removeAttribute("hidden");
+       }
+      }
+      if (id2) {
+       document.getElementById(id2).removeAttribute("disabled");
+      }                                        
+    }
+
+    async function save(event, cancel, edit, save) {
+      event.preventDefault();
+      const data = new FormData(event.target);
+      try {
+        const response = await axios.put('/user/edit-profile', data, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        if (response.status === 200) {
+          document.getElementById(edit).hidden = false;
+          document.getElementById(save).hidden = true;
+          document.getElementById(cancel).hidden = true;
+
+          try {
+            if (event.target.newPassword) {
+              document.getElementById('resetButton').hidden = true;
+              document.getElementById('new-password').value = "";
+              document.getElementById('new-password').hidden = true;
+              document.getElementById('current-password').textContent = "********";
+            }
+          } catch(err) {}
+          event.target.querySelectorAll('input').forEach(ele => {
+            ele.disabled = true;
+          });
+          try {
+            event.target.querySelector('select').disabled = true;
+          } catch(err) {}
+          alert(response.data.message);
+        }
+      } catch(err) {
+          alert(err.response.data.error);
+      }
+    }
+
+    async function resetPassword(email) {
+      try {
+        const response = await axios.post('/user/forgot-password', {user: email}, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        if (response.status === 200) {
+          alert(response.data.message);
+        }
+      } catch(err) {
+        alert(err.response.data.error);
+      }
+    }
+
+    //address side
+    async function renderAddAddress() {
+      try {
+        const response = await axios.get('/add-address');
+        if (response.status === 200) {
+          document.getElementById('mainContent').innerHTML = response.data;
+        }
+      } catch(err) {
+        alert(err);
+      }
+    }
+
+    async function addressSave(event) {
+      event.preventDefault();
+      const data = new FormData(event.target);
+      try {
+        const response = await axios.post('/user/add-address', data, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        if (response.status === 200) {
+          alert(response.data.message);
+          pageSwitch('/address');
+        }
+      } catch(err) {
+        alert(err.response.data.error);
+      }
+    }
+
+    async function addressDelete(addressId) {
+      try {
+        const conf = confirm('This will delete this address');
+        if (conf) {
+          const response = await axios.delete(`/user/delete-address/${addressId}`, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          if (response.status === 200) {
+            alert(response.data.message);
+            await document.getElementById(`form-${addressId}`).remove();
+          }
+        }
+      } catch(err) {
+          alert(err.response?.data?.error || err);
+      }
+    }
+
+    async function addressEdit(addressId) {
+      const form = document.getElementById(`form-${addressId}`);
+      document.getElementById(`header-${addressId}`).classList.add('d-none');
+      form.querySelectorAll('input').forEach(inp => {
+        inp.disabled = false;
+      });
+      form.querySelector('button[type="submit"]').hidden = false;
+      document.getElementById(`cancel-${addressId}`).hidden = false;
+    }
+
+    async function addressEditSubmit(event) {
+      event.preventDefault();
+      const data = new FormData(event.target);
+      try {
+        const response = await axios.put('/user/edit-address', data, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        if (response.status === 200) {
+          alert(response.data.message);
+          pageSwitch('/address');
+        }
+      } catch(err) {
+        alert(err.response?.data?.error || "Internal server error");
+      }
+    }
+
+  </script>
+</body>
+</html>

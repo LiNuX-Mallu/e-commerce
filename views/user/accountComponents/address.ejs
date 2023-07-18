@@ -1,0 +1,62 @@
+<div class="container">
+    <div class="d-flex justify-content-center flex-column p-5">
+        <h3 class="text-center">Addresses</h3>
+        <div class="d-flex justify-content-end">
+            <button class="nav-link border-0 bg-primary text-white rounded-2" onclick="renderAddAddress()"> <i class="fa fa-plus"></i> Add new address</button>
+        </div>
+        <% address.forEach(address => { %>
+        <form id="form-<%=address._id%>" class="d-flex justify-content-center flex-column gap-4 p-10 pt-5 pb-5 mt-3" onsubmit="addressEditSubmit(event)">
+            <div id="header-<%=address._id%>" class="d-flex flex-row">
+                <h6 class="w-50 text-capitalize text-decoration-underline text-darkblue"><%= address.houseNumber + " " + address.street %></h6>
+                <button onclick="addressEdit('<%= address._id %>')" type="button" class="border-0 bg-transparent text-darkblue ms-auto"><i class="fa fa-edit"></i></button>
+                <button onclick="addressDelete('<%= address._id %>')" type="button" class="border-0 bg-transparent text-darkblue ms-1"><i class="fa fa-trash"></i></button>
+            </div>
+            <input hidden name="addressId" value="<%=address._id%>">
+            <div class="d-flex gap-5">
+                <div>
+                    <label class="form-label">Home</label>
+                    <input type="radio" name="addressType" value="home" <% if (address.addressType === "home") { %> checked <% } %> disabled>
+                </div>
+                <div>
+                    <label class="form-label">Office</label>
+                    <input type="radio" name="addressType" value="office" <% if (address.addressType === "office") { %> checked <% } %> disabled>
+                </div>
+                <div>
+                    <label class="form-label">Other</label>
+                    <input type="radio" name="addressType" value="other" <% if (address.addressType === "other") { %> checked <% } %> disabled>
+                </div>
+            </div>
+            <div>
+                <label class="form-label">House/building number</label>
+                <input class="form-control" value="<%= address.houseNumber %>" name="houseNumber" disabled>
+            </div>
+            <div>
+                <label class="form-label">Street</label>
+                <input class="form-control" value="<%= address.street %>" name="street" disabled>
+            </div>
+            <div class="d-flex flex-row gap-3">
+                <div>
+                    <label class="form-label">City</label>
+                    <input class="form-control" value="<%= address.city %>" name="city" disabled>
+                </div>
+                <div>
+                    <label class="form-label">State</label>
+                    <input class="form-control" value="<%= address.state %>" name="state" disabled>
+                </div>
+                <div>
+                    <label class="form-label">Pincode</label>
+                    <input class="form-control" value="<%= address.pincode %>" name="pincode" disabled>
+                </div>
+            </div>
+            <div>
+                <label class="form-label">Landmark &nbsp; <em>(optional)</em> </label>
+                <input class="form-control" name="landmark" value="<%= address.landmark %>" disabled>
+            </div>
+            <div class="d-flex flex-column justify-content-center pt-2">
+                <button hidden type="submit" class="nav-link bg-primary border-0 rounded-2 text-white">save address</button>
+                <button onclick="pageSwitch('/address')" type="button" class="nav-link bg-transparent border-0" id="cancel-<%=address._id%>" hidden>cancel</button>
+            </div>
+        </form>
+        <% }); %>
+    </div>
+</div>

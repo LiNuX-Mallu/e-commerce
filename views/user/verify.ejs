@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Zokso | Verify</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <style>
+            button[disabled], input[disabled] {
+                background-color: #f8f9fa;
+                cursor: not-allowed;
+            }
+        </style>
+        <script src="/js/axios.min.js"></script>
+        <script>
+            axios.post(`/otp/send-sms`, {phone: '<%= phone %>'}, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            axios.post(`/otp/send-email`, {email: '<%= email %>'}, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <% if (email || phone) { %>
+        <div class="container-fluid d-flex justify-content-center mt-4 mb-4">
+            <div style="background-color: rgb(243, 243, 243);" class="w-50 shadow rounded-2 d-flex flex-column gap-5 p-5">
+                <% if (email) { %>
+                <form class="d-flex flex-column gap-2" id="form-email">
+                    <p class="text-center" id="email-info"></p>
+                    <p class="text-black text-center">Otp send to your email address</p>
+                    <div class="d-flex justify-content-center">
+                        <input value="<%= email %>" name="email" class="form-control w-50" disabled>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <input placeholder="Enter otp send to your email" name="otp" id="otp-email" class="form-control w-50">
+                    </div>
+                    <div class="d-flex justify-content-end w-75">
+                        <button id="resend-email" type="button" class="border-0 btn-link bg-transparent">resend otp</button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" id="submit-otp" class="btn-warning rounded-2 border-0 p-2 shadow-none">submit otp</button>
+                    </div>
+                </form>
+                <hr>
+                <% } if (phone) { %>
+                <form class="d-flex flex-column gap-2" id="form-phone">
+                    <p class="text-center" id="phone-info" id="phone-info"></p>
+                    <p class="text-black text-center">Otp send to your mobile number</p>
+                    <div class="d-flex justify-content-center">
+                        <input value="+91<%= phone %>" class="form-control w-50" disabled>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <input id="otp-phone" name="otp" placeholder="Enter otp send to your number" class="form-control w-50">
+                    </div>
+                    <div class="d-flex justify-content-end w-75">
+                        <button id="resend-phone" type="button" class="border-0 btn-link bg-transparent">resend otp</button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button id="submit-phone" type="submit" class="btn-warning rounded-2 border-0 p-2 shadow-none">submit otp</button>
+                    </div>
+                </form>
+                <% } %>
+            </div>
+        </div>
+        <% } else { %>
+            <script>
+                window.location.href = '/login';
+            </script>
+        <% } %>
+
+        <script>
+                let count = 0;
+                let validated = 0;
+
+                '<% if (email) { %>'
+                    count++;
+                '<% } %>'
+                '<% if (phone) { %>'
+                    count++;
+                '<% } %>'
+
+                const resendEmail = document.getElementById('resend-email');
+                const resendPhone = document.getElementById('resend-phone');
+                const resendDelay = 30;
+
+                let timer;
+
+                '<% if (email) { %>'
+                resendEmail.addEventListener('click', async () => {
+                    clearTimeout(timer);
+                    resendEmail.disabled = true;
+                    countdown(resendEmail, resendDelay);
+                    const email = '<%= email %>';
+                    try {
+                        await axios.post('/otp/send-email', {email}, {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                    } catch (err) {
+                        alert('unable to send otp');
+                    }
+                });
+                '<% } if (phone) { %>'
+                resendPhone.addEventListener('click', async () => {
+                    clearTimeout(timer);
+                    resendPhone.disabled = true;
+                    countdown(resendPhone, resendDelay);
+                    const phone = '<%= phone %>';
+                    try {
+                        await axios.post('/otp/send-sms', {phone}, {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                    } catch(err) {
+                        alert('unable to send otp');
+                    }
+                });
+                '<% } %>'
+
+                function countdown(button, seconds) {
+                    button.textContent = `resend otp in (${seconds}s)`;
+    
+                    if (seconds > 0) {
+                        timer = setTimeout(() => {
+                            countdown(button, seconds - 1);
+                        }, 1000);
+                    } else {
+                        button.disabled = false;
+                        button.textContent = 'resend otp';
+                    }
+                }
+                '<% if (email) { %>'
+                document.getElementById('form-email').addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    const formData = new FormData(event.target);
+                    const email = '<%= email %>';
+                    const info = document.getElementById('email-info');
+                    try {
+                        const response = await axios.post('/otp/verify-email', {otp: formData.get('otp'), email}, {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                        if (response.status === 200) {
+                            info.style.color = "green";
+                            info.textContent = response.data.message;
+                            document.getElementById('otp-email').disabled = true;
+                            document.getElementById('submit-otp').disabled = true;
+                            document.getElementById('resend-email').style.display = "none";
+                            validated++;
+                            setTimeout(() => {
+                                if (validated === count) {
+                                window.location.href = '/login';
+                                }
+                            }, 2000);
+                            
+                        }
+                    } catch(err) {
+                        info.style.color = "red";
+                        info.textContent = err.response.data.error;
+                    }
+                });
+                '<% } if (phone) { %>'
+                document.getElementById('form-phone').addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    const formData = new FormData(event.target);
+                    const phone = "<%= phone %>";
+                    const info = document.getElementById('phone-info');
+                    try {
+                        const response = await axios.post('/otp/verify-sms', {phone, otp: formData.get('otp')}, {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                        if (response.status === 200) {
+                            info.style.color = "green";
+                            info.textContent = response.data.message;
+                            document.getElementById('otp-phone').disabled = true;
+                            document.getElementById('submit-phone').disabled = true;
+                            document.getElementById('resend-phone').style.display = "none";
+                            validated++;
+                            setTimeout(() => {
+                                if (validated === count) {
+                                window.location.href = '/login';
+                                }
+                            }, 2000);
+                        }
+                    } catch(err) {
+                        info.style.color = "red";
+                        info.textContent = err.response.data.error;
+                    }
+                });
+                '<% } %>'
+                
+        </script>
+    </body>
+    </html>
+    </body>
+</html>

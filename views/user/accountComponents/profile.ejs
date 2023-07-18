@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="d-flex justify-content-center  p-4">
+        <i class="fa fa-5x fa-user-circle"></i>
+    </div>
+    <div class="p-10 pt-5 d-flex flex-column gap-5">
+        <form class="d-flex flex-row gap-3" onsubmit="save(event, 'cancel-names', 'edit-names', 'save-names')">
+            <!-- <label class="form-label">Firstname: </label> -->
+            <input type="text" class="form-control" id="first-name" name="firstName" value="<%= user.firstName %>" disabled placeholder="Firstname">
+            <!-- <label class="form-label">Lastname: </label> -->
+            <input type="text" class="form-control" id="last-name" name="lastName" value="<%= user.lastName %>" disabled>
+            <button type="button" class="nav-link border-0 fw-bold text-white rounded-1 bg-gradient bg-dark" id="edit-names" onclick="edit('cancel-names', 'edit-names', 'save-names', 'first-name', 'last-name')">edit</button>
+            <button type="submit" class="nav-link border-0 fw-bold text-white rounded-1 bg-gradient bg-dark" id="save-names" hidden>save</button>
+            <button type="button" class="rounded-1 fw-bold" onclick="pageSwitch('/profile')" id="cancel-names" hidden>cancel</button>
+        </form>
+
+        <form class="d-flex flex-row gap-3" onsubmit="save(event, 'cancel-email', 'edit-email', 'save-email')">
+            <!-- <label class="form-label">Email: </label> -->
+            <input type="text" class="form-control" id="email" name="email" value="<%= user.email %>" disabled>
+            <button type="button" class="nav-link border-0 fw-bold text-white rounded-1 bg-gradient bg-dark" id="edit-email" onclick="edit('cancel-email', 'edit-email', 'save-email', 'email')">edit</button>
+            <button type="submit" class="nav-link border-0 fw-bold text-white rounded-1 bg-gradient bg-dark" id="save-email" hidden>save</button>
+            <button type="button" class="rounded-1 fw-bold" onclick="pageSwitch('/profile')" id="cancel-email" hidden>cancel</button>
+        </form>
+
+        <form class="d-flex flex-row gap-3" onsubmit="save(event, 'cancel-phone', 'edit-phone', 'save-phone')">
+            <!-- <label class="form-label">Phone: </label> -->
+            <input class="form-control" type="text" id="phone" name="phone" disabled value="<%= user.phone %>">
+            <button type="button" class="nav-link border-0 fw-bold text-white rounded-1 bg-gradient bg-dark" id="edit-phone" onclick="edit('cancel-phone', 'edit-phone', 'save-phone', 'phone')">edit</button>
+            <button type="submit" class="nav-link border-0 fw-bold text-white rounded-1 bg-gradient bg-dark" id="save-phone" hidden>save</button>
+            <button type="button" class="rounded-1 fw-bold" onclick="pageSwitch('/profile')" id="cancel-phone" hidden>cancel</button>
+        </form>
+
+        <form class="d-flex flex-row gap-3" onsubmit="save(event, 'cancel-gender&dob', 'edit-gender&dob', 'save-gender&dob')">
+            <select class="form-control" id="gender" name="gender" disabled>
+                <option value="<%= user.gender %>"><%= user.gender %></option>
+                <% if (user.gender === "male") { %>
+                    <option value="female">female</option>
+                <% } else { %>
+                    <option value="male">male</option>
+                <% } %>
+            </select>
+            <input type="date" class="form-control" disabled name="dob" id="dob" value="<%= new Date(user.dob).toISOString().split('T')[0] %>">
+            <button type="button" class="nav-link border-0 fw-bold text-white rounded-1 bg-gradient bg-dark" id="edit-gender&dob" onclick="edit('cancel-gender&dob', 'edit-gender&dob', 'save-gender&dob', 'gender', 'dob')">edit</button>
+            <button type="submit" class="nav-link border-0 fw-bold text-white rounded-1 bg-gradient bg-dark" id="save-gender&dob" hidden>save</button>
+            <button type="button" class="rounded-1 fw-bold" onclick="pageSwitch('/profile')" id="cancel-gender&dob" hidden>cancel</button>
+        </form>
+        <form class="d-flex flex-row gap-3" onsubmit="save(event, 'cancel-password', 'edit-password', 'save-password')">
+            <input disabled type="password" class="form-control" id="current-password" name="currentPassword" value="********" placeholder="Current password">
+            <input hidden type="text" class="form-control" id="new-password" name="newPassword" placeholder="New password">
+            <button type="button" class="nav-link border-0 fw-bold text-white rounded-1 bg-gradient bg-dark" id="edit-password" onclick="edit('cancel-password', 'edit-password', 'save-password', 'current-password', 'new-password')">edit</button>
+            <button type="submit" class="nav-link border-0 fw-bold text-white rounded-1 bg-gradient bg-dark" id="save-password" hidden>save</button>
+            <button type="button" class="rounded-1 fw-bold" onclick="pageSwitch('/profile')" id="cancel-password" hidden>cancel</button>
+        </form>
+        <button hidden class="nav-link bg-transparent border-0" type="button" id="resetButton" onclick="resetPassword('<%= user.email %>')">forgot password?</button>
+    </div>
+</div>
