@@ -22,14 +22,8 @@ const deleteCategory = require('../controller/admin/delete-category');
 const editCategoryTemplate = require('../controller/template/admin/edit-category-template');
 const editCategory = require('../controller/admin/edit-category');
 
-const authenticate = (req, res, next) => {
-    if (req.session && req.session.adminLoggedIn) {
-        next();
-    } else {
-        next();
-        //return res.redirect('/admin/login');
-    }
-}
+const {adminAuthenticate} = require('../middlewares');
+const authenticate = adminAuthenticate;
 
 router.get('/', (req, res) => {
     if (req.session && req.session.adminLoggedIn) {

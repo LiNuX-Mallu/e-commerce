@@ -1,16 +1,14 @@
 const User = require('../../model/user');
-const Product = require('../../model/product');
 
 module.exports = async (req, res) => {
     try {
         const user = await User.findById(req.session.userId).populate({path: 'cart'}).populate({path: 'cart.productId', model: 'Product'});
         if (user) {
-            res.render('user/cart', {user});
+            res.render('user/checkout', {user});
         } else {
-            throw new Error("Cannot find user");
+            throw new Error("Internal server error");
         }
     } catch(err) {
-        console.log(err);
-        res.status(500).send("Internal server error");
+        res.status(500).send(err.message || "Internal server error");
     }
-};
+}

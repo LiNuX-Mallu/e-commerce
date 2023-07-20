@@ -12,7 +12,8 @@ router.get('/logout', (req, res) => {
     delete req.session.userLoggedIn;
     delete req.session.userId;
     res.status(200).redirect('/login');
-})
+});
+
 
 router.post('/register', userRegister);
 router.post('/login', userLogin);

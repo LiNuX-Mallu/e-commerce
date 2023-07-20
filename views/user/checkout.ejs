@@ -11,7 +11,7 @@
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
@@ -22,8 +22,6 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -89,9 +87,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
-                        <a href="./home.html"><i class="fa fa-home"></i> Home</a>
+                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
                         <a href="./shop.html">Shop</a>
-                        <span>Shopping Cart</span>
+                        <span>Check Out</span>
                     </div>
                 </div>
             </div>
@@ -100,78 +98,95 @@
     <!-- Breadcrumb Section Begin -->
 
     <!-- Shopping Cart Section Begin -->
-    <section class="shopping-cart spad">
+    <section class="checkout-section spad">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div style="padding-left: 10%; padding-right: 10%;" class="cart-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th class="p-name text-center">Product</th>
-                                    <th></th>
-                                    <th>Size</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% let total = 0; %>
-                                <% user.cart.forEach(item => { %>
-                                <% total += item.productId.price * item.quantity; %>
-                                <tr id="row-<%=item._id%>" class="border-bottom border-gray-100">
-                                    <td style="padding-left: 3%;" class="cart-pic first-row"><img src="<%=item.productId.images[1]%>" alt=""></td>
-                                    <td style="font-weight: 600;" class="text-capitalize first-row">
-                                        <%= item.productId.productName %>
-                                    </td>
-                                    <td class="total-price first-row"><%= item.size %></td>
-                                    <td class="p-price first-row">$<%=item.productId.price%></td>
-                                    <td class="qua-col first-row">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="<%=item.quantity%>">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="total-price first-row">$<%= item.productId.price * item.quantity %></td>
-                                    <td class="close-td first-row">
-                                        <button onclick="removeFromCart('<%=item._id%>')" class="border-0 bg-transparent">
-                                            <i class="fa fa-trash-alt text-danger"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <% }); %>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="cart-buttons">
-                                <a href="/shop" class="primary-btn continue-shop">Continue shopping</a>
-                                <a href="/cart" class="primary-btn up-cart">Update cart</a>
+            <form action="#" class="checkout-form">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- <div class="checkout-content">
+                            <a href="#" class="content-btn">Click Here To Login</a>
+                        </div> -->
+                        <h4>Biiling Details</h4>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="fir">First Name<span>*</span></label>
+                                <input type="text" id="fir">
                             </div>
-                            <div class="discount-coupon">
-                                <h6>Discount Codes</h6>
-                                <form action="#" class="coupon-form">
-                                    <input type="text" placeholder="Enter your codes">
-                                    <button type="submit" class="site-btn coupon-btn">Apply</button>
-                                </form>
+                            <div class="col-lg-6">
+                                <label for="last">Last Name<span>*</span></label>
+                                <input type="text" id="last">
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="cun-name">Company Name</label>
+                                <input type="text" id="cun-name">
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="cun">Country<span>*</span></label>
+                                <input type="text" id="cun">
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="street">Street Address<span>*</span></label>
+                                <input type="text" id="street" class="street-first">
+                                <input type="text">
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="zip">Postcode / ZIP (optional)</label>
+                                <input type="text" id="zip">
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="town">Town / City<span>*</span></label>
+                                <input type="text" id="town">
                             </div>
                         </div>
-                        <div class="col-lg-4 offset-lg-4">
-                            <div class="proceed-checkout">
-                                <ul>
-                                    <li class="subtotal">Subtotal <span>$<%=total%></span></li>
-                                    <li class="cart-total">Total <span>$<%=total%></span></li>
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- <div class="checkout-content">
+                            <input type="text" placeholder="Enter Your Coupon Code">
+                        </div> -->
+                        <div class="place-order">
+                            <h4>Your Order</h4>
+                            <div class="order-total">
+                                <ul class="order-table">
+                                    <% let total = 0; %>
+                                    <li>Product <span>Total</span></li>
+                                    <% user.cart.forEach(item => { %>
+                                        <% total += item.productId.price * item.quantity; %>
+                                        <li class="fw-bold"><%= item.productId.productName %> &nbsp; <code>X</code> &nbsp;  <%= item.quantity %> <span>$<%= item.productId.price * item.quantity %></span></li>
+                                    <% }); %>
+                                    <li class="fw-normal">Subtotal <span>$<%= total %></span></li>
+                                    <li class="total-price">Total <span>$<%= total %></span></li>
                                 </ul>
-                                <a href="/checkout" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                                <div class="payment-check">
+                                    <div class="pc-item">
+                                        <label for="pc-check">
+                                            Cheque Payment
+                                            <input type="checkbox" id="pc-check">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="pc-item">
+                                        <label for="pc-paypal">
+                                            Paypal
+                                            <input type="checkbox" id="pc-paypal">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="pc-item">
+                                        <label for="pc-paypal">
+                                            Cash on delivery
+                                            <input type="checkbox" id="pc-paypal">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="order-btn">
+                                    <button type="submit" class="site-btn place-btn">Place Order</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </section>
     <!-- Shopping Cart Section End -->
@@ -296,22 +311,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="/js/axios.min.js"></script>
-
-    <script>
-        async function removeFromCart(itemId) {
-            try {
-                const response = await axios.delete(`/remove-from-cart/${itemId}`);
-                if (response.status === 200) {
-                    document.getElementById(`row-${itemId}`).remove();
-                } else {
-                    throw new Error();
-                }
-            } catch(err) {
-                alert(err.response?.data?.error || err);
-            }
-        }
-    </script>
 </body>
 
 </html>

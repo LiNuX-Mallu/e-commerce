@@ -43,6 +43,7 @@ app.use(session({
 
 app.set('view engine', 'ejs');
 
+
 app.use('/', mainRouter);
 app.use('/user', userRouter);
 app.use('/otp', otpRouter);
