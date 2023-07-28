@@ -25,7 +25,6 @@ const storage = new CloudinaryStorage({
 const upload = multer({storage: storage});
 
 module.exports = async (req, res) => {
-    console.log(req.body);
     const valid = await validate(req.body, req.files);
     if (!valid.isValid) {
         return res.status(400).json({errors: valid.errors});

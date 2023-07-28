@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
         const result = await Product.findOne({_id: req.params.id});
         let user;
         if (req.session.userLoggedIn) {
-            user = await User.findById(req.session.userId);
+            user = await User.findById(req.session.userId).populate({path: 'cart'}).populate({path: 'cart.productId', model: 'Product'});
         }
         if (result && user) {
             res.render('user/product', {product: result, user});

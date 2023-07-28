@@ -37,8 +37,13 @@
 <body>
     <!-- Page Preloder -->
     <div id="preloder">
-        <div class="loader"></div>
+        <div class="loader"></div> 
     </div>
+
+    <div id="spinner" class="spinner-border position-fixed start-50 top-50 visually-hidden" role="status" style="z-index: 12;">
+        <span class="sr-only"></span>
+    </div>
+       
 
     <!-- Header Section Begin -->
     <header class="header-section">
@@ -307,16 +312,19 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 user.classList.add('red-placeholder');
             } else {
                 try {
+                    document.getElementById('spinner').classList.remove('visually-hidden');
                     const response = await axios.post('/user/forgot-password', {user: user.value});
                     if (response.status === 200) {
                         document.getElementById('success').textContent = response.data.message;
                     }
+                    document.getElementById('spinner').classList.add('visually-hidden');
                 } catch (err) {
                     if (err.response.status === 400) {
                         user.value = "";
                         user.placeholder = err.response.data.error;
                         user.classList.add('red-placeholder');
                     }
+                    document.getElementById('spinner').classList.add('visually-hidden');
                 }
             }
         });

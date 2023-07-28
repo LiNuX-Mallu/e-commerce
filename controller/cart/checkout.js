@@ -1,6 +1,9 @@
 const User = require('../../model/user');
 
 module.exports = async (req, res) => {
+    if (!req.session.userLoggedIn) {
+        return res.redirect('/login');
+    }
     try {
         const user = await User.findById(req.session.userId).populate({path: 'cart'}).populate({path: 'cart.productId', model: 'Product'});
         if (user) {

@@ -3,6 +3,7 @@
         <h3 class="text-center">Add new address</h3>
         <form class="d-flex justify-content-center flex-column gap-4 p-10 pt-5 pb-5" onsubmit="addressSave(event)">
             <div class="d-flex gap-5">
+                <input hidden name="defaulted" value="<%=true%>">
                 <div>
                     <label class="form-label">Home</label>
                     <input type="radio" name="addressType" value="home">
@@ -17,7 +18,15 @@
                 </div>
             </div>
             <div>
-                <label class="form-label">House/building number</label>
+                <label class="form-label">Name</label>
+                <input class="form-control" name="customerName">
+            </div>
+            <div>
+                <label class="form-label">Contact number</label>
+                <input class="form-control" name="contactNumber">
+            </div>
+            <div>
+                <label class="form-label">House/building number or Company name</label>
                 <input class="form-control" name="houseNumber">
             </div>
             <div>
@@ -26,7 +35,7 @@
             </div>
             <div class="d-flex flex-row gap-3">
                 <div>
-                    <label class="form-label">City</label>
+                    <label class="form-label">Town/city</label>
                     <input class="form-control" name="city">
                 </div>
                 <div>

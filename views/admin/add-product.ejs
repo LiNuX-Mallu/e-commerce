@@ -9,7 +9,7 @@
   <title>Add product</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="shortcut icon" href="/img/favicon.ico">
 
   <!-- Theme styles -->
@@ -33,6 +33,9 @@
 </head>
 
 <body>
+  <div id="spinner" class="spinner-border position-fixed start-50 top-50 visually-hidden" role="status" style="z-index: 12;">
+    <span class="sr-only"></span>
+  </div>
   <div class="main-content">
       <div class="row justify-content-center mt-5">
         <div class="col-12 col-xl-7">
@@ -113,7 +116,7 @@
                 Price:
               </label>
               <div class="input-group">
-                <span class="input-group-text">$</span>
+                <span class="input-group-text">₹</span>
                 <input type="text" class="form-control" name="price">
               </div>
               <p class="text-danger p-2" id="priceError"></p>
@@ -172,16 +175,19 @@
 
         const data = new FormData(event.target);
         try {
+            document.getElementById('spinner').classList.remove('visually-hidden');
             const response = await axios.post('/admin/add-product', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
+            document.getElementById('spinner').classList.add('visually-hidden');
             if (response.status === 200) {
                 alert(response.data.message);
                 window.location.href = '/admin/products';
             }
         } catch(err) {
+          document.getElementById('spinner').classList.add('visually-hidden');
           if (err.response.status === 400) {
             const errors = err.response.data.errors;
             Object.keys(errors).forEach((key) => {

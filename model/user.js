@@ -23,6 +23,8 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             default: () => new mongoose.Types.ObjectId()
         },
+        customerName: {type: String, required: true},
+        contactNumber: {type: String, required: true},
         addressType: {type: String, required: true},
         houseNumber: {type: String, required: true},
         street: {type: String, required: true},
@@ -30,7 +32,8 @@ const userSchema = new mongoose.Schema({
         state: {type: String, required: true},
         country: {type: String, default: "india"},
         pincode: {type: Number, required: true},
-        landmark: {type: String}
+        landmark: {type: String},
+        defaulted: {type: Boolean}
     }],
 
     cart: [{
@@ -38,7 +41,7 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product'
         },
-        quantity: {type: Number, required: true, default: 1},
+        quantity: {type: Number, required: true},
         size: {type: String, required: true},
         color: {type: String}
     }]

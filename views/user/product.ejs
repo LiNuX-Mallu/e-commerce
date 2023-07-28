@@ -31,6 +31,14 @@
         <div class="loader"></div>
     </div>
 
+    <div id="addCart" style="visibility: hidden; z-index: 10; display: flex; justify-content: center; align-items: center; height: 100vh; width: 100%; position: fixed; background-color: #00000083;">
+        <div style="position: fixed; background-color: #141414; padding: 2%; padding-top: 0.5%; border-radius: 10px;">
+            <div class="d-flex justify-content-center">
+                <button onclick="document.getElementById('addCart').style.visibility = 'hidden'" type="button" class="nav-link border-0 bg-transparent text-center"><i class="text-white fa fa-circle-xmark pt-2"></i></button>
+            </div>
+            <h3 style="color: #e7ab3c; font-weight: 700;">Added to cart&nbsp;<i class="fa fa-shopping-bag"></i></h2>
+        </div>
+    </div>
     <!-- Header Section Begin -->
     <header class="header-section">
         <div class="container">
@@ -46,9 +54,9 @@
                     <div class="col-lg-7 col-md-7">
                         <div class="advanced-search">
                             <button type="button" class="category-btn">All Categories</button>
-                            <form action="#" class="input-group">
-                                <input type="text" placeholder="What do you need?">
-                                <button type="button"><i class="ti-search"></i></button>
+                            <form action="/search-product" method="POST" class="input-group">
+                                    <input type="text" name="keyword" placeholder="What do you need?" required>
+                                    <button type="submit"><i class="ti-search"></i></button>
                             </form>
                         </div>
                     </div>
@@ -57,55 +65,55 @@
                         <ul class="nav-right">
                             <li class="heart-icon"><a href="#">
                                     <i class="icon_heart_alt"></i>
-                                    <span>1</span>
+                                    <span>0</span>
                                 </a>
                             </li>
                             <li class="cart-icon"><a href="/cart">
                                     <i class="icon_bag_alt"></i>
-                                    <span>3</span>
+                                    <span><%=user.cart.length%></span>
                                 </a>
                                 <div class="cart-hover">
                                     <div class="select-items">
                                         <table>
                                             <tbody>
+                                                <% if (user.cart[0]) { %>
                                                 <tr>
-                                                    <td class="si-pic"><img src="/img/select-product-1.jpg" alt=""></td>
+                                                    <td class="si-pic"><img src="<%=user.cart[0].productId.images[1]%>" alt=""></td>
                                                     <td class="si-text">
                                                         <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
+                                                            <p>₹<%=user.cart[0].productId.price%> x <%=user.cart[0].quantity%></p>
+                                                            <h6><%=user.cart[0].productId.productName%></h6>
                                                         </div>
                                                     </td>
                                                     <td class="si-close">
                                                         <i class="ti-close"></i>
                                                     </td>
                                                 </tr>
+                                                <% } %>
+                                                <% if (user.cart[1]) { %>
                                                 <tr>
-                                                    <td class="si-pic"><img src="/img/select-product-2.jpg" alt=""></td>
+                                                    <td class="si-pic"><img src="<%=user.cart[1].productId.images[1]%>" alt=""></td>
                                                     <td class="si-text">
                                                         <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
+                                                            <p>₹<%=user.cart[1].productId.price%> x <%=user.cart[1].quantity%></p>
+                                                            <h6><%=user.cart[1].productId.productName%></h6>
                                                         </div>
                                                     </td>
                                                     <td class="si-close">
                                                         <i class="ti-close"></i>
                                                     </td>
                                                 </tr>
+                                                <% } %>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="select-total">
-                                        <span>total:</span>
-                                        <h5>$120.00</h5>
-                                    </div>
                                     <div class="select-button">
                                         <a href="/cart" class="primary-btn view-card">VIEW CARD</a>
-                                        <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
+                                        <a href="/checkout" class="primary-btn checkout-btn">CHECK OUT</a>
                                     </div>
                                 </div>
                             </li>
-                            <li class="cart-price">$150.00</li>
+                            <li class="cart-price">₹150.00</li>
                         </ul>
                     </div>
                     <% } %>
@@ -348,7 +356,7 @@
                                     <span>(5)</span>
                                 </div>
                                 <div class="pd-desc">
-                                    <h4>$<%= product.price - 1 %><span><%= product.price %></span></h4>
+                                    <h4>₹<%= product.price - 1 %><span><%= product.price %></span></h4>
                                 </div>
 
                                 <!-- form -->
@@ -468,7 +476,7 @@
                                             <tr>
                                                 <td class="p-catagory">Price</td>
                                                 <td>
-                                                    <div class="p-price">$495.00</div>
+                                                    <div class="p-price">₹495.00</div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -614,8 +622,8 @@
                                 <h5>Pure Pineapple</h5>
                             </a>
                             <div class="product-price">
-                                $14.00
-                                <span>$35.00</span>
+                                ₹14.00
+                                <span>₹35.00</span>
                             </div>
                         </div>
                     </div>
@@ -639,7 +647,7 @@
                                 <h5>Guangzhou sweater</h5>
                             </a>
                             <div class="product-price">
-                                $13.00
+                                ₹13.00
                             </div>
                         </div>
                     </div>
@@ -663,7 +671,7 @@
                                 <h5>Pure Pineapple</h5>
                             </a>
                             <div class="product-price">
-                                $34.00
+                                ₹34.00
                             </div>
                         </div>
                     </div>
@@ -687,7 +695,7 @@
                                 <h5>Converse Shoes</h5>
                             </a>
                             <div class="product-price">
-                                $34.00
+                                ₹34.00
                             </div>
                         </div>
                     </div>
@@ -831,7 +839,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                     }
                 });
                 if (response.status === 200) {
-                    alert(response.data.message);
+                    document.getElementById('addCart').style.visibility = ''
                 }
             } catch(err) {
                 alert(err.response?.data?.error || err);

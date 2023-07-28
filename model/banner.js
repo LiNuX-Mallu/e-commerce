@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 
 const bannerSchema = new mongoose.Schema({
-    title: {type: String, required: true},
-    images: [{
-        type: String,
-        required: true
-    }],
-    description: {type: String}
+    bannerType: {type: String, required: true},
+    image: {type: String, required: true},
+    title: {type: String},
+    categoryName: {type: String},
+    description: {type: String},
+    linkTo: {type: String},
+    offer: {type: Number}
 });
 
 const Banner = mongoose.model('Banner', bannerSchema);

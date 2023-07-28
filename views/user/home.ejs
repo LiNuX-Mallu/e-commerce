@@ -41,8 +41,8 @@
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
                         <div class="logo">
-                            <a href="./index.html">
-                                <img src="img/logo.png" alt="">
+                            <a href="/home">
+                                <h2 style="color: #e7ab3c; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;" class="fw-bolder">ZOKSO</h2>
                             </a>
                         </div>
                     </div>
@@ -50,8 +50,10 @@
                         <div class="advanced-search">
                             <button type="button" class="category-btn">All Categories</button>
                             <div class="input-group">
-                                <input type="text" placeholder="What do you need?">
-                                <button type="button"><i class="ti-search"></i></button>
+                                <form action="/search-product" method="POST">
+                                    <input type="text" name="keyword" placeholder="What do you need?" required>
+                                    <button type="submit"><i class="ti-search"></i></button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -61,56 +63,60 @@
                             <li class="heart-icon">
                                 <a href="#">
                                     <i class="icon_heart_alt"></i>
-                                    <span>1</span>
+                                    <span>0</span>
                                 </a>
                             </li>
                             <li class="cart-icon">
                                 <a href="/cart">
                                     <i class="icon_bag_alt"></i>
-                                    <span>3</span>
+                                    <span><%=user.cart.length%></span>
                                 </a>
                                 <div class="cart-hover">
                                     <div class="select-items">
                                         <table>
                                             <tbody>
+                                                <% if (user.cart[0]) { %>
                                                 <tr>
-                                                    <td class="si-pic"><img src="img/select-product-1.jpg" alt=""></td>
+                                                    <td class="si-pic"><img src="<%=user.cart[0].productId.images[1]%>" alt=""></td>
                                                     <td class="si-text">
                                                         <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
+                                                            <p>₹<%=user.cart[0].productId.price%> x <%=user.cart[0].quantity%></p>
+                                                            <h6><%=user.cart[0].productId.productName%></h6>
                                                         </div>
                                                     </td>
                                                     <td class="si-close">
                                                         <i class="ti-close"></i>
                                                     </td>
                                                 </tr>
+                                                <% } %>
+                                                <% if (user.cart[1]) { %>
                                                 <tr>
-                                                    <td class="si-pic"><img src="img/select-product-2.jpg" alt=""></td>
+                                                    <td class="si-pic"><img src="<%=user.cart[1].productId.images[1]%>" alt=""></td>
                                                     <td class="si-text">
                                                         <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
+                                                            <p>₹<%=user.cart[1].productId.price%> x <%=user.cart[1].quantity%></p>
+                                                            <h6><%=user.cart[1].productId.productName%></h6>
                                                         </div>
                                                     </td>
                                                     <td class="si-close">
                                                         <i class="ti-close"></i>
                                                     </td>
                                                 </tr>
+                                                <% } %>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="select-total">
+                                    <!-- <div class="select-total">
                                         <span>total:</span>
-                                        <h5>$120.00</h5>
-                                    </div>
+                                        <h5>₹120.00</h5>
+                                    </div> -->
                                     <div class="select-button">
                                         <a href="/cart" class="primary-btn view-card">VIEW CARD</a>
-                                        <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
+                                        <a href="/checkout" class="primary-btn checkout-btn">CHECK OUT</a>
                                     </div>
                                 </div>
                             </li>
-                            <li class="cart-price">$150.00</li>
+                            <li class="cart-price">₹150.00</li>
                         </ul>
                         <% } %>
                     </div>
@@ -173,38 +179,23 @@
     <!-- Hero Section Begin -->
     <section class="hero-section">
         <div class="hero-items owl-carousel">
-            <div class="single-hero-items set-bg" data-setbg="img/hero-1.jpg">
+            <% mainBanner.forEach(banner => { %>
+            <div class="single-hero-items set-bg" data-setbg="<%=banner.image%>">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-5">
-                            <span>Bag,kids</span>
-                            <h1>Black friday</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore</p>
-                            <a href="#" class="primary-btn">Shop Now</a>
+                            <span><%=banner.categoryName%></span>
+                            <h1><%=banner.title%></h1>
+                            <p><%=banner.description%></p>
+                            <a href="<%=banner.linkTo%>" class="primary-btn">Shop Now</a>
                         </div>
                     </div>
                     <div class="off-card">
-                        <h2>Sale <span>50%</span></h2>
+                        <h2>Upto <span><%=banner.offer%>%</span></h2>
                     </div>
                 </div>
             </div>
-            <div class="single-hero-items set-bg" data-setbg="img/hero-2.jpg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <span>Bag,kids</span>
-                            <h1>Black friday</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore</p>
-                            <a href="#" class="primary-btn">Shop Now</a>
-                        </div>
-                    </div>
-                    <div class="off-card">
-                        <h2>Sale <span>50%</span></h2>
-                    </div>
-                </div>
-            </div>
+            <% }); %>
         </div>
     </section>
     <!-- Hero Section End -->
@@ -215,8 +206,8 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="single-banner">
-                        <a href="/shop">
-                            <img src="img/banner-1.jpg" alt="">
+                        <a href="/shop/men">
+                            <img src="<%=menCategory.images[0]%>" alt="">
                             <div class="inner-text">
                                 <h4>Men’s</h4>
                             </div>
@@ -226,8 +217,8 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="single-banner">
-                        <a href="/shop">
-                            <img src="img/banner-2.jpg" alt="">
+                        <a href="/shop/women">
+                            <img src="<%=womenCategory.images[0]%>" alt="">
                             <div class="inner-text">
                                 <h4>Women’s</h4>
                             </div>
@@ -237,8 +228,8 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="single-banner">
-                        <a href="/shop">
-                            <img src="img/banner-3.jpg" alt="">
+                        <a href="/shop/kids">
+                            <img src="<%=kidsCategory.images[0]%>" alt="">
                             <div class="inner-text">
                                 <h4>Kid’s</h4>
                             </div>
@@ -256,111 +247,44 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="product-large set-bg" data-setbg="img/products/women-large.jpg">
+                    <div class="product-large set-bg" data-setbg="<%=womenBanner.image%>">
                         <h2>Women’s</h2>
-                        <a href="#">Discover More</a>
+                        <a href="/shop/women">Discover More</a>
                     </div>
                 </div>
                 <div class="col-lg-8 offset-lg-1">
                     <div class="filter-control">
-                        <ul>
-                            <li class="active">Clothings</li>
-                            <li>HandBag</li>
-                            <li>Shoes</li>
-                            <li>Accessories</li>
-                        </ul>
+                        <a href="/shop/women">
+                            <h4 class="fw-bold text-dark text-decoration-underline">Explore more like these</h4>
+                        </a>
                     </div>
                     <div class="product-slider owl-carousel">
+                        <% womenProduct.forEach(product => { %>
                         <div class="product-item">
                             <div class="pi-pic">
-                                <img src="img/products/women-1.jpg" alt="">
-                                <div class="sale">Sale</div>
+                                <img src="<%=product.images[1]%>" alt="">
+                                <!-- <div class="sale">Sale</div> -->
                                 <div class="icon">
                                     <i class="icon_heart_alt"></i>
                                 </div>
                                 <ul>
                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                    <li class="quick-view"><a href="/product/<%=product._id%>">+ Quick View</a></li>
                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                 </ul>
                             </div>
                             <div class="pi-text">
-                                <div class="catagory-name">Coat</div>
-                                <a href="#">
-                                    <h5>Pure Pineapple</h5>
+                                <div class="catagory-name"><%=product.category.categoryName%></div>
+                                <a href="/product/<%=product._id%>">
+                                    <h5><%=product.productName%></h5>
                                 </a>
                                 <div class="product-price">
-                                    $14.00
-                                    <span>$35.00</span>
+                                    ₹<%=product.price-1%>
+                                    <span>₹<%=product.price%></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="product-item">
-                            <div class="pi-pic">
-                                <img src="img/products/women-2.jpg" alt="">
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
-                                </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="pi-text">
-                                <div class="catagory-name">Shoes</div>
-                                <a href="#">
-                                    <h5>Guangzhou sweater</h5>
-                                </a>
-                                <div class="product-price">
-                                    $13.00
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item">
-                            <div class="pi-pic">
-                                <img src="img/products/women-3.jpg" alt="">
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
-                                </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="pi-text">
-                                <div class="catagory-name">Towel</div>
-                                <a href="#">
-                                    <h5>Pure Pineapple</h5>
-                                </a>
-                                <div class="product-price">
-                                    $34.00
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item">
-                            <div class="pi-pic">
-                                <img src="img/products/women-4.jpg" alt="">
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
-                                </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="pi-text">
-                                <div class="catagory-name">Towel</div>
-                                <a href="#">
-                                    <h5>Converse Shoes</h5>
-                                </a>
-                                <div class="product-price">
-                                    $34.00
-                                </div>
-                            </div>
-                        </div>
+                        <% }); %>
                     </div>
                 </div>
             </div>
@@ -378,7 +302,7 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br /> do ipsum dolor sit amet,
                         consectetur adipisicing elit </p>
                     <div class="product-price">
-                        $35.00
+                        ₹35.00
                         <span>/ HanBag</span>
                     </div>
                 </div>
@@ -413,110 +337,43 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="filter-control">
-                        <ul>
-                            <li class="active">Clothings</li>
-                            <li>HandBag</li>
-                            <li>Shoes</li>
-                            <li>Accessories</li>
-                        </ul>
+                        <a href="/shop/men">
+                            <h4 class="fw-bold text-dark text-decoration-underline">Explore more like these</h4>
+                        </a>
                     </div>
                     <div class="product-slider owl-carousel">
+                        <% menProduct.forEach(product => { %>
                         <div class="product-item">
                             <div class="pi-pic">
-                                <img src="img/products/man-1.jpg" alt="">
-                                <div class="sale">Sale</div>
+                                <img src="<%=product.images[1]%>" alt="">
+                                <!-- <div class="sale">20% offer</div> -->
                                 <div class="icon">
                                     <i class="icon_heart_alt"></i>
                                 </div>
                                 <ul>
                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                    <li class="quick-view"><a href="/product/<%=product._id%>">+ Quick View</a></li>
                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                 </ul>
                             </div>
                             <div class="pi-text">
-                                <div class="catagory-name">Coat</div>
-                                <a href="#">
-                                    <h5>Pure Pineapple</h5>
+                                <div class="catagory-name"><%=product.category.categoryName%></div>
+                                <a href="/product/<%=product._id%>">
+                                    <h5><%=product.productName%></h5>
                                 </a>
                                 <div class="product-price">
-                                    $14.00
-                                    <span>$35.00</span>
+                                    ₹<%=product.price-1%>
+                                    <span>₹<%=product.price%></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="product-item">
-                            <div class="pi-pic">
-                                <img src="img/products/man-2.jpg" alt="">
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
-                                </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="pi-text">
-                                <div class="catagory-name">Shoes</div>
-                                <a href="#">
-                                    <h5>Guangzhou sweater</h5>
-                                </a>
-                                <div class="product-price">
-                                    $13.00
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item">
-                            <div class="pi-pic">
-                                <img src="img/products/man-3.jpg" alt="">
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
-                                </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="pi-text">
-                                <div class="catagory-name">Towel</div>
-                                <a href="#">
-                                    <h5>Pure Pineapple</h5>
-                                </a>
-                                <div class="product-price">
-                                    $34.00
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item">
-                            <div class="pi-pic">
-                                <img src="img/products/man-4.jpg" alt="">
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
-                                </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="pi-text">
-                                <div class="catagory-name">Towel</div>
-                                <a href="#">
-                                    <h5>Converse Shoes</h5>
-                                </a>
-                                <div class="product-price">
-                                    $34.00
-                                </div>
-                            </div>
-                        </div>
+                        <% }); %>
                     </div>
                 </div>
                 <div class="col-lg-3 offset-lg-1">
-                    <div class="product-large set-bg m-large" data-setbg="img/products/man-large.jpg">
+                    <div class="product-large set-bg m-large" data-setbg="<%=menBanner.image%>">
                         <h2>Men’s</h2>
-                        <a href="#">Discover More</a>
+                        <a href="/shop/men">Discover More</a>
                     </div>
                 </div>
             </div>
@@ -527,42 +384,14 @@
 
     <!-- Instagram Section Begin -->
     <div class="instagram-photo">
-        <div class="insta-item set-bg" data-setbg="img/insta-1.jpg">
+        <% instagramBanner.forEach(banner => { %>
+        <div class="insta-item set-bg" data-setbg="<%=banner.image%>">
             <div class="inside-text">
                 <i class="ti-instagram"></i>
-                <h5><a href="#">zokso_clothing</a></h5>
+                <h5><a href="<%=banner.linkTo%>">zokso_clothing</a></h5>
             </div>
         </div>
-        <div class="insta-item set-bg" data-setbg="img/insta-2.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="img/insta-3.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="img/insta-4.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="img/insta-5.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="img/insta-6.jpg">
-            <div class="inside-text">
-                <i class="ti-instagram"></i>
-                <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
+        <% }); %>
     </div>
     <!-- Instagram Section End -->
 
@@ -650,7 +479,7 @@
                             </div>
                             <div class="sb-text">
                                 <h6>Free Shipping</h6>
-                                <p>For all order over 99$</p>
+                                <p>For all order over 99₹</p>
                             </div>
                         </div>
                     </div>
@@ -776,11 +605,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="copyright-text">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <!-- <div class="copyright-text">
+                            Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </div>
+Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
+                        </div> -->
                         <div class="payment-pic">
                             <img src="img/payment-method.png" alt="">
                         </div>

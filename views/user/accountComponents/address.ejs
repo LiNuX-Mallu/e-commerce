@@ -27,30 +27,38 @@
                 </div>
             </div>
             <div>
-                <label class="form-label">House/building number</label>
-                <input class="form-control" value="<%= address.houseNumber %>" name="houseNumber" disabled>
+                <label class="form-label">Name</label>
+                <input class="form-control" value="<%=address.customerName%>" name="customerName" disabled>
+            </div>
+            <div>
+                <label class="form-label">Contact number</label>
+                <input class="form-control" value="<%=address.contactNumber%>" name="contactNumber" disabled>
+            </div>
+            <div>
+                <label class="form-label">House/building number or Company name</label>
+                <input class="form-control" value="<%=address.houseNumber%>" name="houseNumber" disabled>
             </div>
             <div>
                 <label class="form-label">Street</label>
-                <input class="form-control" value="<%= address.street %>" name="street" disabled>
+                <input class="form-control" value="<%=address.street%>" name="street" disabled>
             </div>
             <div class="d-flex flex-row gap-3">
                 <div>
-                    <label class="form-label">City</label>
-                    <input class="form-control" value="<%= address.city %>" name="city" disabled>
+                    <label class="form-label">Town/city</label>
+                    <input class="form-control" value="<%=address.city%>" name="city" disabled>
                 </div>
                 <div>
                     <label class="form-label">State</label>
-                    <input class="form-control" value="<%= address.state %>" name="state" disabled>
+                    <input class="form-control" value="<%=address.state%>" name="state" disabled>
                 </div>
                 <div>
                     <label class="form-label">Pincode</label>
-                    <input class="form-control" value="<%= address.pincode %>" name="pincode" disabled>
+                    <input class="form-control" value="<%=address.pincode%>" name="pincode" disabled>
                 </div>
             </div>
             <div>
                 <label class="form-label">Landmark &nbsp; <em>(optional)</em> </label>
-                <input class="form-control" name="landmark" value="<%= address.landmark %>" disabled>
+                <input class="form-control" name="landmark" value="<%=address.landmark%>" disabled>
             </div>
             <div class="d-flex flex-column justify-content-center pt-2">
                 <button hidden type="submit" class="nav-link bg-primary border-0 rounded-2 text-white">save address</button>
