@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Products</title>
+  <title>coupons</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -18,7 +18,6 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" type="text/css" href="../cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
   <!-- Vendor -->
   <link rel="stylesheet" type="text/css" href="/css/vendor.min.css">
 
@@ -31,6 +30,10 @@
 
     gtag('config', 'G-JJNV6J8RHQ');
   </script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.js"></script>
+
 </head>
 
 <body>
@@ -79,7 +82,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="/admin/products" class="nav-link active" aria-expanded="" aria-controls="sidebar-pages">
+            <a href="/admin/products" class="nav-link" aria-expanded="" aria-controls="sidebar-pages">
               <span class="svg-icon text-primary me-2 relative-top--2">
                 <i class="fa-solid fa-shirt"></i>
               </span>
@@ -126,13 +129,13 @@
           <li>
             <a href="/admin/orders" class="nav-link" aria-expanded="" aria-controls="sidebar-pages">
                 <span class="svg-icon text-primary me-2 relative-top--2">
-                  <i class="fa-solid fa-truck"></i>
+                    <i class="fa-solid fa-truck"></i>
                 </span>
                 Orders
               </a>
           </li>
           <li>
-            <a href="/admin/coupons" class="nav-link" aria-expanded="" aria-controls="sidebar-pages">
+            <a href="/admin/coupons" class="nav-link active" aria-expanded="" aria-controls="sidebar-pages">
                 <span class="svg-icon text-primary me-2 relative-top--2">
                     <i class="fa-solid fa-tag"></i>
                 </span>
@@ -448,14 +451,14 @@
           </li>
         </ul>
 
-        <!-- <a href="https://wrapbootstrap.com/theme/foresight-admin-bootstrap-5-theme-WB0M81L86" target="_blank" class="btn btn-light btn-sm text-primary mt-2 mt-lg-auto mb-2">
+        <a href="https://wrapbootstrap.com/theme/foresight-admin-bootstrap-5-theme-WB0M81L86" target="_blank" class="btn btn-light btn-sm text-primary mt-2 mt-lg-auto mb-2">
           <span class="svg-icon text-primary d-none d-lg-block">
             <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><title>ionicons-v5-f</title><path d="M320,336h76c55,0,100-21.21,100-75.6s-53-73.47-96-75.6C391.11,99.74,329,48,256,48c-69,0-113.44,45.79-128,91.2-60,5.7-112,35.88-112,98.4S70,336,136,336h56" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/><polyline points="192 400.1 256 464 320 400.1" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/><line x1="256" y1="224" x2="256" y2="448.03" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/></svg>
           </span>
           <span class="text-primary d-lg-none">Buy now</span>
-        </a> -->
+        </a>
 
-        <a href="/admin/logout" class="btn btn-light btn-sm d-none d-lg-block" data-sidebar="sm">
+        <a href="#!" class="btn btn-light btn-sm d-none d-lg-block" data-toggle="sidebar" data-sidebar="sm">
           <span class="svg-icon text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><title>ionicons-v5-j</title><path d="M176,176V136a40,40,0,0,1,40-40H424a40,40,0,0,1,40,40V376a40,40,0,0,1-40,40H216a40,40,0,0,1-40-40V336" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/><polyline points="272 336 352 256 272 176" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/><line x1="48" y1="256" x2="336" y2="256" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/></svg>
           </span>
@@ -470,41 +473,31 @@
       <!-- header -->
       <div class="d-md-flex align-items-center">
         <h3 class="mb-3 mb-md-0">
-          Products
+          Coupons
         </h3>
-        <!-- <a href="#!" class="btn btn-white hover-lift-light ms-auto me-3">
-          <span class="svg-icon svg-icon-xs text-dark me-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><title>ionicons-v5-a</title><polyline points="112 268 256 412 400 268" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px"/><line x1="256" y1="392" x2="256" y2="100" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px"/></svg>
-          </span>
-          Export
-        </a> -->
-        <a href="/admin/session/add-product" class="btn btn-purple hover-lift-light shadow-light-sm ms-auto me-3">
-          <span class="svg-icon svg-icon-sm text-white me-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><title>ionicons-v5-a</title><line x1="256" y1="112" x2="256" y2="400" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/><line x1="400" y1="256" x2="112" y2="256" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/></svg>
-          </span>
-          Add product
-        </a>
+
+        <a href="/admin/session/add-coupon" class="btn btn-purple hover-lift-light shadow-light-sm ms-auto me-3">
+            <span class="svg-icon svg-icon-sm text-white me-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><title>ionicons-v5-a</title><line x1="256" y1="112" x2="256" y2="400" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/><line x1="400" y1="256" x2="112" y2="256" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/></svg>
+            </span>
+            Add coupon
+          </a>
       </div>
 
       <!-- filters -->
-      <% const flag = (products[0].notAvailable === true) ? true : false;%>
       <ul class="nav nav-tabs nav-overflow mt-3 mt-md-0">
         <li class="nav-item">
-          <a class="nav-link <% if (!flag) { %> active <% } %>" aria-current="page" href="/admin/products/">
+          <a class="nav-link active" aria-current="page" href="#!">
             All
-            <% if (!flag) { %>
-            <span class="badge bg-purple rounded-pill ms-1"><%= count %></span>
-            <% } %>
+            <span class="badge bg-purple rounded-pill ms-1"><%=count%></span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <% if (flag) { %> active <% } %>" href="/admin/products/notAvailable">
-            Removed
-            <% if (flag) { %>
-              <span class="badge bg-purple rounded-pill ms-1"><%= count %></span>
-            <% } %>
+          <a class="nav-link" href="#!">
+            Deactivated
           </a>
         </li>
+        
       </ul>
 
       <!-- report -->
@@ -570,80 +563,95 @@
         <div class="table-responsive">
           <table class="table table-sm card-table table-nowrap">
             <thead>
-              <tr class="text-center">
+              <tr class="fw-bold text-center">
+                <th>coupon type</th>
                 <th>
+                  Code
                 </th>
                 <th>
-                  Product ID
+                    discount
                 </th>
                 <th>
-                  Name
+                  Status
                 </th>
                 <th>
-                  Price
+                  Expire Date
                 </th>
                 <th>
-                  Stock
-                </th>
-                <th>
-                  Category
-                </th>
-                <th>
-                  Added at
+                    Usage count
                 </th>
                 <th>&nbsp;</th>
               </tr>
             </thead>
-            <tbody class="list fw-bold">
-              <% products.forEach((product) => { %>
-              <tr id="row-<%= product._id %>" class="text-center">
-                <td class="w-25">
-                    <img src="<%= product.images[1] || product.images[0] %>" class="img-fluid me-3 w-100 h-100" alt="">
-                </td>
-                <td class="text-danger">
-                  <%= product.productId %>
-                </td>
+            <tbody class="list">
+              <% coupon.forEach((coupon) => { %>
+              <tr class="fw-bold text-center">
                 <td>
-                  <a href="#!" class="item-name text-dark relative-top-2 text-capitalize">
-                    <%= product.productName %>
-                  </a>
+                  <%=coupon.couponType%>
                 </td>
-                <td>
-                  ₹<%= product.price %>
-                </td>
-                <td>
-                  <ul class="list">
-                    <% Object.keys(product.sizeAndStock).forEach(key => { %>
-                      <li><%= key %> : &nbsp; <%= product.sizeAndStock[key] %></li>
-                    <% }); %>
-                  </ul>
-                </td>
-                <td class="text-capitalize">
-                    <%= product.category.categoryName %>
-                </td>
-                <td class="fs-sm text-black">
-                  <%= product.addedAt %>
-                </td>
-                <td>
-                  <div class="dropdown">
-                    <a href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="svg-icon text-gray-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><title>ionicons-v5-f</title><circle cx="256" cy="256" r="32" style="fill:none;stroke:#000;stroke-miterlimit:10;stroke-width:32px"/><circle cx="416" cy="256" r="32" style="fill:none;stroke:#000;stroke-miterlimit:10;stroke-width:32px"/><circle cx="96" cy="256" r="32" style="fill:none;stroke:#000;stroke-miterlimit:10;stroke-width:32px"/></svg>
-                      </span>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="/admin/session/edit-product/<%= product._id %>">Edit</a>
-                      <% if (!flag) { %>
-                        <button type="button" onclick="deleteProduct('<%= product._id %>')" class="dropdown-item text-danger" href="#!">Delete</button>
-                      <% } else { %>
-                        <button type="button" onclick="deleteProduct('<%= product._id %>')" class="dropdown-item text-success" href="#!">Add back</button>
-                      <% } %>
+                <td class="text-uppercase">
+                    <div class="w-100 bg-gray-200 pt-1 rounded-1">
+                        <%=coupon.couponCode%>
                     </div>
-                  </div>
                 </td>
+                <td>
+                    <% if (coupon.couponType === "freeDelivery") { %>
+                    <p class="text-gray-600">None</p>
+                    <% } else if (coupon.couponType === "fixedPriceDiscount") { %>
+                    ₹<%=coupon.discountValue%>
+                    <% } else if (coupon.couponType === "percentageDiscount") { %>
+                    <%=coupon.discountValue%>%
+                    <% } %>
+                </td>
+                <% if (coupon.isActive) { %>
+                  <td class="text-success">
+                    Active
+                  </td>
+                <% } else { %>
+                  <td class="text-danger">
+                    Inactive
+                  </td>
+                <% } %>
+                        <% let expireDate = coupon.expireDate %>
+                        <% const dayIndex = expireDate.getDay(); %>
+                        <% const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']; %>
+                        <% const day = daysOfWeek[dayIndex]; %>
+
+                        <% const monthIndex = expireDate.getMonth(); %>
+                        <% const monthsOfYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']; %>
+                        <% const month = monthsOfYear[monthIndex]; %>
+
+                        <% const date = expireDate.getDate(); %>
+                        <% const year = expireDate.getFullYear() %>
+
+                        <% expireDate = `${day} ${date} ${month} ${year}`; %>
+                <td class="fs-sm text-muted">
+                  <%=expireDate%>
+                </td>
+                <td>
+                    <%=coupon.usageCount%>
+                </td>
+
+                <td class="p-2">
+                    <button id="optButton-<%=coupon._id%>" onclick="optionShow('<%=coupon._id%>')" class="border-0 bg-transparent" type="button">
+                        <i style="color: rgb(0, 0, 185); font-size: large;" class="fa fa-ellipsis"></i>
+                    </button>
+
+                    <div id="options-<%=coupon._id%>" class="w-100 d-flex flex-column gap-1 p-1 visually-hidden">
+                        <div class="d-flex justify-content-end">
+                            <button onclick="optionHide('<%=coupon._id%>')" class="border-0 bg-transparent"><span class="fa fa-circle-xmark"></span></button>
+                        </div>
+                        <a href="/admin/session/edit-coupon/<%=coupon._id%>" class="bg-gray-200 nav-link p-1 border-0 fw-bold" type="button">view/edit</a>
+                        <% if (coupon.isActive) { %>
+                        <button onclick="deactivate('<%=coupon._id%>')" class="border-0 text-danger fw-bold" type="button">deactivate</button>
+                        <% } else { %>
+                        <button style="color: rgb(0, 161, 0);" onclick="activate('<%=coupon._id%>')" class="border-0 fw-bold" type="button">activate</button>
+                        <% } %>
+                    </div>
+                </td>
+                
               </tr>
               <% }); %>
-
             </tbody>
           </table>
         </div>
@@ -652,7 +660,7 @@
           <ul class="nav-pagination">
             <% for (let i=1; i<Math.ceil(count/10); i++) { %>
               <li>
-                <a class="page" href="#!"><%= i %></a>
+                <a class="page" href="#!"><%=i%></a>
               </li>
             <% } %>
           </ul>
@@ -660,7 +668,7 @@
       </div>
     </div>
 
-    <div class="list-alert alert alert-dark w-300 w-md-400 border-0 shadow-light-lg fade fixed-bottom start-50 translate-middle-x mb-4" role="alert" style="z-index: -1;">
+    <div class="list-alert alert alert-dark w-300 w-md-400 bcoupon-0 shadow-light-lg fade fixed-bottom start-50 translate-middle-x mb-4" role="alert" style="z-index: -1;">
       <div class="row align-items-center">
         <div class="col">
           <div class="form-check">
@@ -691,7 +699,6 @@
   <script src="/js/theme.min.js"></script>
   <script src="/js/axios.min.js"></script>
 
-
   <script type="text/javascript">
     $(function () {
       var options = {
@@ -703,18 +710,93 @@
       };
 
       var companiesList = new List('companies', options);
-    });
+    })
 
-    async function deleteProduct(productId) {
-      try {
-        const response = await axios.put('/admin/delete-product', {productId});
-        if (response.status === 200) {
-          document.getElementById(`row-₹{productId}`).remove();
-        }
-      } catch(err) {
-        alert(err.response.data.error);
-      }
+    function optionShow(couponId) {
+        document.getElementById(`options-${couponId}`).classList.remove('visually-hidden');
+        document.getElementById(`optButton-${couponId}`).classList.add('visually-hidden');
     }
+    function optionHide(couponId) {
+        document.getElementById(`options-${couponId}`).classList.add('visually-hidden');
+        document.getElementById(`optButton-${couponId}`).classList.remove('visually-hidden');
+    }
+
+    async function deactivate(couponId) {
+        try {
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Deactivate the coupon!'
+            });
+            
+            if (result.isConfirmed) {
+                const response = await axios.put('/admin/deactivate-coupon', {couponId}, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                if (response.status === 200) {
+                    await Swal.fire({
+                        title: 'Coupon successfully deactivated',
+                        confirmButtonColor: '#3085d6'
+                        }
+                    );
+                    window.location.reload();
+                } else {
+                    throw new Error();
+                }
+            }
+
+        } catch(err) {
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            });
+        }
+    }
+
+    async function activate(couponId) {
+        try {
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Activate the coupon!'
+            });
+            
+            if (result.isConfirmed) {
+                const response = await axios.put('/admin/deactivate-coupon', {couponId}, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                if (response.status === 200) {
+                    await Swal.fire({
+                        title: 'Coupon successfully Activated',
+                        confirmButtonColor: '#3085d6'
+                        }
+                    );
+                    window.location.reload();
+                } else {
+                    throw new Error();
+                }
+            }
+
+        } catch(err) {
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            });
+        }
+    }
+
   </script>
 </body>
 

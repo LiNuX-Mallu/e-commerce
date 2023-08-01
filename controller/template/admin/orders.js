@@ -2,7 +2,7 @@ const Order = require('../../../model/order');
 
 module.exports = async (req, res) => {
     try {
-        const orders = await Order.find().populate({path: 'orderItems.productId', model: 'Product'});
+        const orders = await Order.find().populate({path: 'orderItems.productId', model: 'Product'}).sort({orderDate: -1});
         const count = await Order.countDocuments();
         if (orders) {
             res.render('admin/orders', {orders, count});

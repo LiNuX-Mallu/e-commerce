@@ -68,7 +68,6 @@ module.exports = async (req, res) => {
         });
         
         const updated = await Product.updateOne({_id: productId}, {$set: formData});
-        console.log(updated);
         
         if (updated.acknowledged && updated.modifiedCount !== 0) {
             res.status(200).json({message: "Product edited successfully"});

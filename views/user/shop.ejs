@@ -46,8 +46,12 @@
                     <div class="col-lg-7 col-md-7">
                         <div class="advanced-search">
                             <button type="button" class="category-btn">All Categories</button>
-                            <form action="/search-product" method="POST" class="input-group">
-                                <input type="text" name="keyword" placeholder="What do you need?">
+                            <form action="/shop?size=<%=size%>&category=<%=category%>&priceRange=<%=priceRange%>&sort=<%=sort%>" method="GET" class="input-group">
+                                <input name="keyword" placeholder="What do you need?">
+                                <input hidden name="category" value="<%=category%>">
+                                <input hidden name="size" value="<%=size%>">
+                                <input hidden name="priceRange" value="<%=priceRange%>">
+                                <input hidden name="sort" value="<%=sort%>">
                                 <button type="submit"><i class="ti-search"></i></button>
                             </form>
                         </div>
@@ -55,14 +59,16 @@
                     <% if (user) { %>
                     <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
-                            <li class="heart-icon"><a href="#">
+                            <!-- <li class="heart-icon"><a href="#">
                                     <i class="icon_heart_alt"></i>
                                     <span>0</span>
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="cart-icon"><a href="/cart">
                                     <i class="icon_bag_alt"></i>
-                                    <span><%=user.cart.length%></span>
+                                    <% if (user.cart.length > 0) { %>
+                                        <span><%=user.cart.length%></span>
+                                    <% } %>
                                 </a>
                                 <div class="cart-hover">
                                     <div class="select-items">
@@ -105,7 +111,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="cart-price">₹150.00</li>
+                            <!-- <li class="cart-price">₹150.00</li> -->
                         </ul>
                     </div>
                     <% } %>
@@ -188,12 +194,12 @@
                     <div class="filter-widget">
                         <h4 class="fw-title">Categories</h4>
                         <ul class="filter-catagories">
-                            <li><a href="/shop/men">Men</a></li>
-                            <li><a href="/shop/women">Women</a></li>
-                            <li><a href="/shop/kids">Kids</a></li>
+                            <li><a href="/shop?category=men&size=<%=size%>&priceRange=<%=priceRange%>&sort=<%=sort%>&keyword=<%=keyword%>">Men</a></li>
+                            <li><a href="/shop?category=women&size=<%=size%>&priceRange=<%=priceRange%>&sort=<%=sort%>&keyword=<%=keyword%>">Women</a></li>
+                            <li><a href="/shop?category=kids&size=<%=size%>&priceRange=<%=priceRange%>&sort=<%=sort%>&keyword=<%=keyword%>">Kids</a></li>
                         </ul>
                     </div>
-                    <div class="filter-widget">
+                    <!-- <div class="filter-widget">
                         <h4 class="fw-title">Brand</h4>
                         <div class="fw-brand-check">
                             <div class="bc-item">
@@ -225,7 +231,7 @@
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="filter-widget">
                         <h4 class="fw-title">Price</h4>
                         <div class="filter-range-wrap">
@@ -236,15 +242,15 @@
                                 </div>
                             </div>
                             <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                                data-min="500" data-max="10000">
+                                data-min="250" data-max="20000">
                                 <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
                                 <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
                                 <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
                             </div>
                         </div>
-                        <a href="#" class="filter-btn">Filter</a>
+                        <button onclick="priceRange()" class="filter-btn border-0">Filter</button>
                     </div>
-                    <div class="filter-widget">
+                    <!-- <div class="filter-widget">
                         <h4 class="fw-title">Color</h4>
                         <div class="fw-color-choose">
                             <div class="cs-item">
@@ -272,29 +278,38 @@
                                 <label class="cs-green" for="cs-green">Green</label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="filter-widget">
                         <h4 class="fw-title">Size</h4>
                         <div class="fw-size-choose">
                             <div class="sc-item">
-                                <input type="radio" id="s-size">
-                                <label for="s-size">s</label>
+                                <a href="/shop?size=XS&category=<%=category%>&priceRange=<%=priceRange%>&sort=<%=sort%>&keyword=<%=keyword%>">
+                                    <label <% if (size === "XS") { %> style="background-color: black; color: white;" <% } %> for="xs-size">xs</label>
+                                </a>
                             </div>
                             <div class="sc-item">
-                                <input type="radio" id="m-size">
-                                <label for="m-size">m</label>
+                                <a href="/shop?size=S&category=<%=category%>&priceRange=<%=priceRange%>&sort=<%=sort%>&keyword=<%=keyword%>">
+                                    <label <% if (size === "S") { %> style="background-color: black; color: white;" <% } %> for="s-size">s</label>
+                                </a>
                             </div>
                             <div class="sc-item">
-                                <input type="radio" id="l-size">
-                                <label for="l-size">l</label>
+                                <a href="/shop?size=M&category=<%=category%>&priceRange=<%=priceRange%>&sort=<%=sort%>&keyword=<%=keyword%>">
+                                    <label <% if (size === "M") { %> style="background-color: black; color: white;" <% } %> for="m-size">m</label>
+                                </a>
                             </div>
                             <div class="sc-item">
-                                <input type="radio" id="xs-size">
-                                <label for="xs-size">xs</label>
+                                <a href="/shop?size=L&category=<%=category%>&priceRange=<%=priceRange%>&sort=<%=sort%>&keyword=<%=keyword%>">
+                                    <label <% if (size === "L") { %> style="background-color: black; color: white;" <% } %> for="l-size">l</label>
+                                </a>
+                            </div>
+                            <div class="sc-item">
+                                <a href="/shop?size=XL&category=<%=category%>&priceRange=<%=priceRange%>&sort=<%=sort%>&keyword=<%=keyword%>">
+                                    <label <% if (size === "XL") { %> style="background-color: black; color: white;" <% } %> for="xl-size">xl</label>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <div class="filter-widget">
+                    <!-- <div class="filter-widget">
                         <h4 class="fw-title">Tags</h4>
                         <div class="fw-tags">
                             <a href="#">Towel</a>
@@ -305,27 +320,29 @@
                             <a href="#">Men's hats</a>
                             <a href="#">Backpack</a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col-lg-9 order-1 order-lg-2">
                     <div class="product-show-option">
                         <div class="row">
                             <div class="col-lg-7 col-md-7">
                                 <div class="select-option">
-                                    <select class="sorting">
-                                        <option value="">Default Sorting</option>
+                                    <select class="sorting" onchange="redirecter(this.value)">
+                                        <option value="/shop?sort=lowToHigh&category=<%=category%>&size=<%=size%>&priceRange=<%=priceRange%>&keyword=<%=keyword%>" <% if (sort === "lowToHigh") { %> seleted <% } %> >Price: low to high</option>
+                                        <option value="/shop?sort=highToLow&category=<%=category%>&size=<%=size%>&priceRange=<%=priceRange%>&keyword=<%=keyword%>" <% if (sort === "highToLow") { %> selected <% } %> >Price: high to low</option>
+                                        <option value="/shop?sort=false&category=<%=category%>&size=<%=size%>&priceRange=<%=priceRange%>&keyword=<%=keyword%>" <% if (!sort) { %> selected <% } %> >Default</option>
                                     </select>
-                                    <select class="p-show">
+                                    <!-- <select class="p-show">
                                         <option value="">Show:</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                             </div>
-                            <div class="col-lg-5 col-md-5 text-right">
+                            <!-- <div class="col-lg-5 col-md-5 text-right">
                                 <p>Show 01- 09 Of 36 Product</p>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
-                    <div class="product-list">
+                    <div id="productList" class="product-list">
                         <div class="row">
                             <% if (products.length === 0) { %>
                                 <div class="p-5 w-100">
@@ -349,7 +366,7 @@
                                     <div class="pi-text">
                                         <div class="catagory-name"><%= product.category.categoryName %></div>
                                         <a href="#">
-                                            <h5><%= product.productName %></h5>
+                                            <h5 class="text-capitalize"><%= product.productName %></h5>
                                         </a>
                                         <div class="product-price">
                                             ₹<%= product.price - 1 %>
@@ -362,11 +379,10 @@
                             
                         </div>
                     </div>
-                    <div class="loading-more">
-                        <i class="icon_loading"></i>
-                        <a href="#">
-                            Loading More
-                        </a>
+                    <div id="loading-more" class="text-center d-none">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -494,6 +510,93 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="/js/jquery.slicknav.js"></script>
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/axios.min.js"></script>
+
+    <script>
+        let page = 2;
+        let loading = false;
+        let noMoreData = '<%=noMoreData%>';
+        noMoreData = (noMoreData === "false") ? false : true;
+
+        async function loadProducts() {
+            if (!loading && !noMoreData) {
+                loading = true;
+                const category = '<%=category%>';
+                const size = '<%=size%>';
+                const priceRange = '<%=priceRange%>';
+                const sort = '<%=sort%>'
+                const keyword = '<%=keyword%>';
+                try {
+                    const response = await axios.get(`/shop?page=${page}&category=${category}&size=${size}&priceRange=${priceRange}&sort=${sort}&keyword=${keyword}`);
+                    let productlist = document.querySelector('#productList .row');
+                    if (response.data.length === 0) {
+                        noMoreData = true;
+                        productlist.insertAdjacentHTML('afterend', '<h4 class="text-center pt-4 text-black-50 fw-bold">You reached the end <i class="fa fa-sad-tear"></i></h4>');
+                    } else {
+                        response.data.forEach(product => {
+                            let productHTML = `
+                            <div class="col-lg-4 col-sm-6">
+                                    <div class="product-item">
+                                        <div class="pi-pic">
+                                            <img src="${product.images[1]}" alt="">
+                                            <div class="icon">
+                                                <i class="icon_heart_alt"></i>
+                                            </div>
+                                            <ul>
+                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                <li class="quick-view"><a href="/product/${product._id}">+ Quick View</a></li>
+                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="pi-text">
+                                            <div class="catagory-name">${product.category.categoryName}</div>
+                                            <a href="#">
+                                                <h5 class="text-capitalize">${product.productName}</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                ₹${product.price - 1}
+                                                <span>${product.price}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `
+                            productlist.insertAdjacentHTML('beforeend', productHTML);
+                        });
+                        page++;
+                    }
+                    loading = false;
+                } catch(err) {
+                    loading = false;
+                    alert('Internal server error');
+                }
+            }
+            document.getElementById('loading-more').classList.add('d-none');
+        }
+
+        '<% if (products.length !== 0) { %>'
+        window.addEventListener('scroll', function() {
+            if (window.scrollY + window.innerHeight >= document.body.offsetHeight - 300) {
+                if (!noMoreData) {
+                    document.getElementById('loading-more').classList.remove('d-none');
+                    setTimeout(async () => {
+                        await loadProducts();
+                    }, 1000);
+                }
+            }
+        });
+        '<% } %>'
+
+        function priceRange() {
+            const min = document.getElementById('minamount').value;
+            const max = document.getElementById('maxamount').value;
+            window.location.href = `/shop?priceRange=${min}-${max}&category=<%=category%>&size=<%=size%>&sort=<%=sort%>&keyword=<%=keyword%>`;
+        }
+
+        function redirecter(url) {
+            window.location.href = url;
+        }
+    </script>
 </body>
 
 </html>

@@ -1,7 +1,16 @@
 const mongoose = require('mongoose');
-const Category = require('./category');
 
 const productSchema = new mongoose.Schema({
+    productId: {
+        type: String,
+        unique: true,
+        validate: {
+            validator: function(v) {
+                return /^\d{6}$/.test(v);
+            },
+            message: props => `${props.value} is not a valid 6-digit ID!`
+        }
+    },
     productName: {type: String, required: true},
     description: {type: String, required: true},
     images: [{type: String}],
@@ -51,63 +60,10 @@ const productSchema = new mongoose.Schema({
     },
 });
 
-
-// productSchema.pre('save', async function(next) {
-//     const productId = this._id;
-//     const newCategory = this.category;
-//     try {
-//         const category = await Category.findOne({categoryName: newCategory, notAvailable: false});
-//         if (category) {
-//             category.products.push(productId);
-//             await category.save();
-//             next();
-//         } else {
-//             throw new Error('category does not exist');
-//         }
-//     } catch(err) {
-//         console.log('error adding product into category');
-//         throw err;
-//     }
-// });
-
-// productSchema.pre('updateOne', async function(next) {
-//     const productId = this.getQuery()._id;
-//     const updateDocument = this.getUpdate();
-//     console.log(updateDocument.notAvailable);
-//     if (updateDocument.notAvailable) {
-//         next();
-//         return;
-//     }
-//     const oldCategory = await this.model.findById(productId);
-//     const newCategory = updateDocument.category;
-//     console.log(oldCategory.category, newCategory);
-    
-
-//     if (oldCategory.category === newCategory) {
-//         next();
-//         return;
-//     }
-//     try {
-//         const removed = await Category.updateOne({categoryName: oldCategory.category}, {
-//             $pull: {
-//                 products: {
-//                     $in: [productId]
-//                 }
-//             }
-//         });
-//         const category = await Category.findOne({categoryName: newCategory, notAvailable: false});
-//         if (category) {
-//             category.products.push(productId);
-//             await category.save();
-//             next();
-//         } else {
-//             throw new Error('category does not exist');
-//         }
-//     } catch(err) {
-//         console.log('error adding product into category');
-//         throw err;
-//     }
-// });
+productSchema.pre('save', function (next) {
+    this.productId = Math.floor(100000 + Math.random() * 900000).toString();
+    next();
+});
 
 const Product = mongoose.model('Product', productSchema);
 

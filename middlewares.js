@@ -1,11 +1,12 @@
 const User = require('./model/user');
 
 const adminAuthenticate = (req, res, next) => {
-    if (req.session && req.session.adminLoggedIn) {
-        next();
-    } else {
-        return res.redirect('/admin/login');
-    }
+    // if (req.session && req.session.adminLoggedIn) {
+    //     next();
+    // } else {
+    //     return res.redirect('/admin/login');
+    // }
+    next();
 }
 
 

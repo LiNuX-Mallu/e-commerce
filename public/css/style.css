@@ -1806,7 +1806,7 @@ ol {
 .filter-widget .filter-range-wrap .range-slider .price-input input {
 	font-size: 16px;
 	color: #252525;
-	max-width: 20%;
+	max-width: 40%;
 	text-align: center;
 	border: 1px solid #ebebeb;
 	border-radius: 2px;
@@ -1830,10 +1830,8 @@ ol {
 	height: 16px;
 	width: 16px;
 	border-radius: 50%;
-	background: #ffffff;
+	background: #e7ab3c;
 	border: none;
-	-webkit-box-shadow: 1px 6px 14px -4px #425c6d;
-	box-shadow: 1px 6px 14px -4px #425c6d;
 	outline: none;
 }
 

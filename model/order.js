@@ -1,6 +1,16 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
+    orderId: {
+        type: String,
+        unique: true,
+        validate: {
+            validator: function(v) {
+                return /^\d{6}$/.test(v);
+            },
+            message: props => `${props.value} is not a valid 6-digit ID!`
+        }
+    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -91,6 +101,11 @@ const orderSchema = new mongoose.Schema({
         trackId: Number,
         deliveryDate: Date
     }
+});
+
+orderSchema.pre('save', function (next) {
+    this.orderId = Math.floor(100000 + Math.random() * 900000).toString();
+    next();
 });
 
 const Order = mongoose.model('Order', orderSchema);

@@ -8,7 +8,6 @@ const login = require('../controller/template/user/login');
 const {resetTemplate} = require('../controller/user/forgot-pass');
 const shop = require('../controller/template/user/shop');
 const product = require('../controller/template/user/product');
-const searchProduct = require('../controller/template/user/searchProduct');
 
 
 const account = require('../controller/template/user/account');
@@ -38,7 +37,6 @@ router.get('/login', login);
 router.get('/reset-password/:uuid', resetTemplate);
 router.get('/account', userAuthenticate, account);
 router.get('/profile', userAuthenticate, profile);
-router.post('/search-product', userAuthenticate, searchProduct);
 
 router.get('/address', userAuthenticate, address);
 router.get('/add-address', userAuthenticate, addAddress);
@@ -46,7 +44,6 @@ router.get('/add-address', userAuthenticate, addAddress);
 router.get('/orders', userAuthenticate, orders);
 
 router.get('/shop', userAuthenticate, shop);
-router.get('/shop/:category', userAuthenticate, shop);
 
 router.get('/product/:id', userAuthenticate, product);
 

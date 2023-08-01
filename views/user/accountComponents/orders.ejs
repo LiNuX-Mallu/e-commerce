@@ -1,7 +1,7 @@
 <% if (orders) { %>
-    <div class="container">
+    <div class="container p-1">
         <% orders.forEach(order => { %>
-            <div style="background-color: rgba(240, 240, 240, 0.733);" class="row m-2 rounded-3">
+            <div style="background-color: rgba(240, 240, 240, 0.733);" class="row m-2 rounded-3 fs-sm btn-sm">
                 <div class="col-md-2 row">
                     <% order.orderItems.forEach(item => { %>
                         <img class="col-6 p-0" width="100%" src="<%=item.productId['images'][1]%>">
@@ -9,13 +9,14 @@
                 </div>
                 <div class="col-md-3 d-flex justify-content-center align-items-center">
                     <ul class="list-unstyled p-2">
+                        <p style="color: rgb(240, 44, 44); font-weight: 500;">Order id: <%=order.orderId%></p>
                         <% order.orderItems.forEach((item) => { %>
                             <li class="font-georgia"><a class="text-dark text-capitalize" href="/product/<%=item.productId._id%>"><%=item.productId.productName%></a>
                                 <span class="">(<%=item.size%>), quantity: </span><%=item.quantity%>
                             </li>
                         <% }); %>
-                        <li class="text-danger pt-1">Total price: <%=order.totalAmount%></li>
-                        <li style="color: rgba(0, 0, 255, 0.877);">Payment method: <%=order.paymentMethod%></li>
+                        <li class="text-danger pt-1">Total price: ₹<%=order.totalAmount%></li>
+                        <li style="color: rgba(0, 0, 0, 0.877);">Payment method: <span class="text-uppercase fw-bold text-danger"><%=order.paymentMethod%></span></li>
                     </ul>
                 </div>
                 <div class="col-md-2 d-flex justify-content-center align-items-center p-2">
@@ -29,16 +30,16 @@
                         <%=order.shippingAddress.pincode%>
                     </p>
                 </div>
-                <div class="col-md-2 d-flex flex-column justify-content-center align-items-center p-0 gap-1">
-                    <button class="btn bg-dark text-white p-0 ps-2 pe-2">View items</button>
+                <div class="col-md-2 d-flex flex-column justify-content-center align-items-center p-4 gap-1">
+                    <button class="w-100 btn-sm btn bg-dark text-white p-0 ps-2 pe-2">View items</button>
                     <% if (order.orderStatus === "confirmed" || order.orderStatus === "pending") { %>
-                    <button class="btn bg-success text-white p-0 ps-2 pe-2">Track order</button>
-                    <button class="btn bg-danger text-white p-0 ps-2 pe-2" onclick="cancelOrder('<%=order._id%>')">Cancel order</button>
+                    <button class="w-100 btn-sm btn bg-success text-white p-0 ps-2 pe-2">Track order</button>
+                    <button class="w-100 btn-sm btn bg-danger text-white p-0 ps-2 pe-2" onclick="cancelOrder('<%=order._id%>')">Cancel order</button>
                     <% } else if (order.orderStatus === "delivered") { %>
-                    <button class="btn bg-danger text-white p-0 ps-2 pe-2">Return order</button>
+                    <button class="w-100 btn-sm btn bg-danger text-white p-0 ps-2 pe-2">Return order</button>
                     <% } %>
                 </div>
-                <div class="col-md-3 d-flex flex-column justify-content-center align-items-center p-2">
+                <div class="col-md-3 d-flex flex-column justify-content-center align-items-start p-2">
                     <p class="fw-bold">Order status: 
                     <% if (order.orderStatus === "confirmed") { %>
                         <span style="color: green;"> <%=order.orderStatus%>&nbsp;<i class="fa fa-check-circle"></i></span>
@@ -57,7 +58,7 @@
                         <% const delivery = `${day} ${date} ${month}`; %>
                         <span class="text-primary fw-normal">Delivering on <%=delivery%></span>
                     <% } else if (order.orderStatus === "cancelled") { %>
-                        <span style="color: rgb(204, 0, 0);"> <%=order.orderStatus%>&nbsp;<i class="fa fa-ban"></i></span>
+                        <span style="color: rgb(204, 0, 0);"> <%=order.orderStatus%>&nbsp;<i class="fa fa-ban"></i></span><br>
                     <% } else if (order.orderStatus === "delivered") { %>
                         <% const deliveryDate = order.trackInfo.deliveryDate; %>
                       <% const dayIndex = deliveryDate.getDay(); %>
@@ -72,6 +73,7 @@
 
                         <% const delivery = `${day} ${date} ${month}`; %>
                         <span style="color: green;"> <%=order.orderStatus%>&nbsp;<i class="fa fa-truck"></i></span>
+                        <br>
                         <span class="text-primary fw-normal">Delivered on <%=delivery%></span>
                     <% } %>
                     </p>

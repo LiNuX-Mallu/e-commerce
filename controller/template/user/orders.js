@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
         return res.redirect('/login');
     }
     try {
-        const orders = await Order.find({userId: req.session.userId}).populate({path: 'orderItems.productId', model: 'Product'});
+        const orders = await Order.find({userId: req.session.userId}).populate({path: 'orderItems.productId', model: 'Product'}).sort({orderDate: -1});
         if (orders) {
             res.render('user/accountComponents/orders', {orders});
         } else {

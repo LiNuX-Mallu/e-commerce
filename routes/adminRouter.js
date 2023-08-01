@@ -5,6 +5,7 @@ const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
 const login = require('../controller/template/admin/admin-login');
+const logout = require('../controller/admin/logout');
 const adminLogin = require('../controller/admin/admin-login.js');
 const adminPanel = require('../controller/template/admin/panel');
 const {viewCustomers, blockCustomer} = require('../controller/template/admin/customers');
@@ -29,6 +30,13 @@ const deleteBanner = require('../controller/admin/delete-banner');
 
 const orders = require('../controller/template/admin/orders');
 
+const coupon = require('../controller/template/admin/coupon');
+const addCouponTemplate = require('../controller/template/admin/add-coupon');
+const addCoupon = require('../controller/admin/add-coupon');
+const editCouponTemplate = require('../controller/template/admin/edit-coupon');
+const editCoupon = require('../controller/admin/edit-coupon');
+const deactivateCoupon = require('../controller/admin/deactivate-coupon');
+
 const {adminAuthenticate} = require('../middlewares');
 const authenticate = adminAuthenticate;
 
@@ -43,6 +51,7 @@ router.get('/', (req, res) => {
 router.get('/login', login);
 router.post('/admin-login', adminLogin);
 router.get('/panel', authenticate, adminPanel);
+router.get('/logout', adminAuthenticate, logout);
 
 router.get('/customers', authenticate, viewCustomers);
 router.put('/block-customer', authenticate, blockCustomer);
@@ -72,14 +81,22 @@ router.delete('/delete-banner/:bannerId', authenticate, deleteBanner);
 
 router.get('/orders', adminAuthenticate, orders);
 
+router.get('/coupons', adminAuthenticate, coupon);
+router.get('/session/add-coupon', adminAuthenticate, addCouponTemplate);
+router.post('/add-coupon', adminAuthenticate, addCoupon);
+router.get('/session/edit-coupon/:couponId', adminAuthenticate, editCouponTemplate);
+router.put('/edit-coupon', adminAuthenticate, editCoupon);
+router.put('/deactivate-coupon', adminAuthenticate, deactivateCoupon);
 
 
-const Product = require('../model/product');
 
-router.delete('/delete-removed/:true', async (req, res) => {
-    res.send(await Product.deleteMany({notAvailable: true}));
-    //res.send(await Product.find({notAvailable: true}));
-});
+// const Tester = require('../model/order');
+// router.get('/tester', async (req, res) => {
+//     const tester = await Tester.find();
+//     for (const x of tester) {
+//         await x.save();
+//     }
+// });
 
 
 module.exports = router;

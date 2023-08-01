@@ -63,14 +63,16 @@
                     <% if (user) { %>
                     <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
-                            <li class="heart-icon"><a href="#">
+                            <!-- <li class="heart-icon"><a href="#">
                                     <i class="icon_heart_alt"></i>
                                     <span>0</span>
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="cart-icon"><a href="/cart">
                                     <i class="icon_bag_alt"></i>
-                                    <span><%=user.cart.length%></span>
+                                    <% if (user.cart.length > 0) { %>
+                                        <span><%=user.cart.length%></span>
+                                    <% } %>
                                 </a>
                                 <div class="cart-hover">
                                     <div class="select-items">
@@ -113,7 +115,6 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="cart-price">₹150.00</li>
                         </ul>
                     </div>
                     <% } %>

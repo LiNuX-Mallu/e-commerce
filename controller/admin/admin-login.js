@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
         if (result) {
             if (await bcrypt.compare(password, result.password)) {
                 req.session.adminLoggedIn = true;
-                req.session.adminName = result.lastName;
+                req.session.adminName = result.name;
                 return res.status(200).json({message: "login successful"});
             } else {
                 return res.status(400).json({error: "Incorrect email or password"});
