@@ -29,6 +29,7 @@ const editbanner = require('../controller/admin/edit-banner');
 const deleteBanner = require('../controller/admin/delete-banner');
 
 const orders = require('../controller/template/admin/orders');
+const deliverOrder = require('../controller/admin/deliver-order');
 
 const coupon = require('../controller/template/admin/coupon');
 const addCouponTemplate = require('../controller/template/admin/add-coupon');
@@ -80,6 +81,7 @@ router.put('/edit-banner', authenticate, upload.single('image'), editbanner);
 router.delete('/delete-banner/:bannerId', authenticate, deleteBanner);
 
 router.get('/orders', adminAuthenticate, orders);
+router.put('/deliver-order', adminAuthenticate, deliverOrder);
 
 router.get('/coupons', adminAuthenticate, coupon);
 router.get('/session/add-coupon', adminAuthenticate, addCouponTemplate);
@@ -90,12 +92,14 @@ router.put('/deactivate-coupon', adminAuthenticate, deactivateCoupon);
 
 
 
-// const Tester = require('../model/order');
+// const Tester = require('../model/product');
 // router.get('/tester', async (req, res) => {
-//     const tester = await Tester.find();
+//     const tester = await Tester.find({notAvailable: false});
 //     for (const x of tester) {
+//         x.description = `Introducing our stunning jacket dress, a versatile and elegant addition to your wardrobe. Crafted with premium materials, this dress exudes comfort and style. The jacket features a chic, tailored design, adding a touch of sophistication to any outfit. The dress itself showcases a flattering A-line silhouette, perfect for all body types. The exquisite craftsmanship and attention to detail ensure a perfect fit and lasting durability. Whether dressing up for a formal event or styling it for a casual occasion, this jacket dress effortlessly elevates your look. Embrace fashion-forward elegance with this timeless piece that promises both flair and comfort.`
 //         await x.save();
 //     }
+//     res.end();
 // });
 
 

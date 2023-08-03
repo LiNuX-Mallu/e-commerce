@@ -59,17 +59,19 @@
                     <% if (user) { %>
                     <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
-                            <!-- <li class="heart-icon"><a href="#">
-                                    <i class="icon_heart_alt"></i>
-                                    <span>0</span>
+                            <li>
+                                <span>₹<%=user.wallet.balance%></span>
+                                <a href="/wallet">
+                                    <i class="fa-solid fa-wallet text-dark"></i>
                                 </a>
-                            </li> -->
+                            </li>
                             <li class="cart-icon"><a href="/cart">
                                     <i class="icon_bag_alt"></i>
                                     <% if (user.cart.length > 0) { %>
                                         <span><%=user.cart.length%></span>
                                     <% } %>
                                 </a>
+                                <% if (user.cart.length !== 0) { %>
                                 <div class="cart-hover">
                                     <div class="select-items">
                                         <table>
@@ -110,6 +112,7 @@
                                         <a href="/checkout" class="primary-btn checkout-btn">CHECK OUT</a>
                                     </div>
                                 </div>
+                                <% } %>
                             </li>
                             <!-- <li class="cart-price">₹150.00</li> -->
                         </ul>
@@ -332,14 +335,9 @@
                                         <option value="/shop?sort=highToLow&category=<%=category%>&size=<%=size%>&priceRange=<%=priceRange%>&keyword=<%=keyword%>" <% if (sort === "highToLow") { %> selected <% } %> >Price: high to low</option>
                                         <option value="/shop?sort=false&category=<%=category%>&size=<%=size%>&priceRange=<%=priceRange%>&keyword=<%=keyword%>" <% if (!sort) { %> selected <% } %> >Default</option>
                                     </select>
-                                    <!-- <select class="p-show">
-                                        <option value="">Show:</option>
-                                    </select> -->
+                                    <a class="nav-link" style="color: rgb(0, 68, 255); font-weight: 600;" href="/shop">Clear Filter</a>
                                 </div>
                             </div>
-                            <!-- <div class="col-lg-5 col-md-5 text-right">
-                                <p>Show 01- 09 Of 36 Product</p>
-                            </div> -->
                         </div>
                     </div>
                     <div id="productList" class="product-list">

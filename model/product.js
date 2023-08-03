@@ -1,16 +1,6 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-    productId: {
-        type: String,
-        unique: true,
-        validate: {
-            validator: function(v) {
-                return /^\d{6}$/.test(v);
-            },
-            message: props => `${props.value} is not a valid 6-digit ID!`
-        }
-    },
     productName: {type: String, required: true},
     description: {type: String, required: true},
     images: [{type: String}],
@@ -57,13 +47,9 @@ const productSchema = new mongoose.Schema({
     notAvailable: {
         type: Boolean,
         default: false
-    },
+    }
 });
 
-productSchema.pre('save', function (next) {
-    this.productId = Math.floor(100000 + Math.random() * 900000).toString();
-    next();
-});
 
 const Product = mongoose.model('Product', productSchema);
 

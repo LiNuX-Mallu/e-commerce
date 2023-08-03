@@ -105,7 +105,7 @@
 
             <div class="d-grid gap-3 mt-5">
               <button type="submit" class="btn btn-primary btn-lg hover-lift-light" type="submit">Add coupon</button>
-              <a href="/admin/coupon" class="btn btn-link pb-5">Cancel</a>
+              <a href="/admin/coupons" class="btn btn-link pb-5">Cancel</a>
             </div>
           </form>
         </div>
@@ -145,7 +145,7 @@
             });
             if (response.status === 200) {
                 alert(response.data.message);
-                window.location.href = "/admin/coupon";
+                window.location.href = "/admin/coupons";
             }
         } catch(err) {
             alert(err.response?.data?.error);

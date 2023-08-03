@@ -1,12 +1,15 @@
 const Order = require('../../model/order');
-const Product = require('../../model/product');
 const User = require('../../model/user');
+const Product = require('../../model/product');
 
 module.exports = async (req, res) => {
     const {orderId} = req.body;
     try {
         const order = await Order.findById(orderId);
         if (order) {
+            if ((order.trackInfo.deliveryDate + 2) > Date.now()) {
+                return res.status(400).json({error: "You cannot return after 2 days of delivery"});
+            }
             for (const item of order.orderItems) {
                 const product = await Product.findById(item.productId);
                 product.sizeAndStock[item.size] += item.quantity;
@@ -21,10 +24,10 @@ module.exports = async (req, res) => {
                     user.wallet.balance += order.totalAmount - order.couponMoney;
                     const saved = user.save();
                     if (saved) {
-                        order.orderStatus = "cancelled";
+                        order.orderStatus = "returned";
                         const saved = await order.save();
                         if (saved) {
-                            res.status(200).json({message: "Order cancelled, Refund amount will be reflected your wallet"});
+                            res.status(200).json({message: "Order returned, Refund amount will be reflected your wallet"});
                         } else {
                             throw new Error("order cancel update error");
                         }
@@ -35,12 +38,12 @@ module.exports = async (req, res) => {
                     throw new Error();
                 }
             } else {
-                order.orderStatus = "cancelled";
+                order.orderStatus = "returned";
                 const saved = await order.save();
                 if (saved) {
-                    res.status(200).json({message: "Order cancelled successfully"});
+                    res.status(200).json({message: "Order returned successfully"});
                 } else {
-                    throw new Error("order cancel update error");
+                    throw new Error("order refund update error");
                 }
             }
         } else {

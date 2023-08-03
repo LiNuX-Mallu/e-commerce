@@ -2,6 +2,35 @@ const User = require('../../model/user');
 const Order = require('../../model/order');
 const Product = require('../../model/product');
 
+const Coupon = require('../../model/coupon');
+
+async function couponCheck (couponCode, totalAmount, req) {
+    try {
+        const coupon = await Coupon.findOne({couponCode: couponCode.toLowerCase()});
+        if (coupon) {
+            if ((+totalAmount - 40) < coupon.minOrderAmount) {
+                return false;
+            }
+            if (coupon.expireDate < Date.now() || coupon.usedBy.includes(req.session.userId)) {
+                return false
+            }
+            let money;
+            if (coupon.couponType === "freeDelivery") {
+                money = 40;
+            } else if (coupon.couponType === "percentageDiscount") {
+                money = +totalAmount * (coupon.discountValue / 100);
+            } else if (coupon.couponType === "fixedPriceDiscount") {
+                money = coupon.discountValue;
+            }
+            return money;
+        } else {
+            return false;
+        } 
+    } catch(err) {
+        throw err;
+    }
+}
+
 module.exports = async (req, res) => {
     try {
         const user = await User.findById(req.session.userId);
@@ -39,32 +68,36 @@ module.exports = async (req, res) => {
             formData.totalAmount += product.price * item.quantity;
         };
         formData.totalAmount += 40;
-        if (req.body.paymentMethod === "cod") {
+        
+        if (req.body.paymentMethod === "razorpay") {
             formData.paymentStatus = "pending";
+            formData.orderStatus = "pending";
+        } else if (req.body.paymentMethod === "cod") {
+            formData.paymentStatus = "success";
             formData.orderStatus = "confirmed";
+        }
 
-            const currentDate = new Date();
-            const deliveryDate = new Date(currentDate);
-            deliveryDate.setDate(currentDate.getDate() + 7);
-            formData['trackInfo.deliveryDate'] = deliveryDate;
+        if (req.body.couponCode) {
+            const money = await couponCheck(req.body.couponCode, formData.totalAmount, req)
+            if (money) {
+                formData.totalAmount -= money;
+                formData.couponMoney = money;
+            } else {
+                throw new Error();
+            }
+        }
 
-            const newOrder = new Order(formData);
-            const ordered = await newOrder.save();
-            if (ordered) {
-                const dayIndex = deliveryDate.getDay();
-                const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                const day = daysOfWeek[dayIndex];
 
-                const monthIndex = deliveryDate.getMonth();
-                const monthsOfYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                const month = monthsOfYear[monthIndex];
+        const currentDate = new Date();
+        const deliveryDate = new Date(currentDate);
+        deliveryDate.setDate(currentDate.getDate() + 7);
+        formData['trackInfo.deliveryDate'] = deliveryDate;
 
-                const date = deliveryDate.getDate();
-
-                const delivery = `${day} ${date} ${month}`;
-
-                res.status(200).json({delivery});
-
+        const newOrder = new Order(formData);
+        const ordered = await newOrder.save();
+        if (ordered) {
+            res.status(200).json({order: ordered});
+            if (req.body.paymentMethod === "cod") {
                 const stockUpdater = user.cart.map(async (item) => {
                     const product = await Product.findById(item.productId);
                     product.sizeAndStock[item.size] -= item.quantity;
@@ -73,9 +106,9 @@ module.exports = async (req, res) => {
                 await Promise.all(stockUpdater);
                 user.cart = [];
                 await user.save();
-            } else {
-                throw new Error();
             }
+        } else {
+            throw new Error();
         }
 
     } catch(err) {

@@ -100,11 +100,17 @@ const orderSchema = new mongoose.Schema({
     trackInfo: {
         trackId: Number,
         deliveryDate: Date
+    },
+    couponMoney: {
+        type: Number,
+        default: 0
     }
 });
 
 orderSchema.pre('save', function (next) {
-    this.orderId = Math.floor(100000 + Math.random() * 900000).toString();
+    if (!this.orderId) {
+        this.orderId = Math.floor(100000 + Math.random() * 900000).toString();
+    }
     next();
 });
 

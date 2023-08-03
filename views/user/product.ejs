@@ -63,57 +63,60 @@
                     <% if (user) { %>
                     <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
-                            <!-- <li class="heart-icon"><a href="#">
-                                    <i class="icon_heart_alt"></i>
-                                    <span>0</span>
+                            <li>
+                                <span>₹<%=user.wallet.balance%></span>
+                                <a href="/wallet">
+                                    <i class="fa-solid fa-wallet text-dark"></i>
                                 </a>
-                            </li> -->
+                            </li>
                             <li class="cart-icon"><a href="/cart">
-                                    <i class="icon_bag_alt"></i>
-                                    <% if (user.cart.length > 0) { %>
-                                        <span><%=user.cart.length%></span>
-                                    <% } %>
-                                </a>
-                                <div class="cart-hover">
-                                    <div class="select-items">
-                                        <table>
-                                            <tbody>
-                                                <% if (user.cart[0]) { %>
-                                                <tr>
-                                                    <td class="si-pic"><img src="<%=user.cart[0].productId.images[1]%>" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>₹<%=user.cart[0].productId.price%> x <%=user.cart[0].quantity%></p>
-                                                            <h6><%=user.cart[0].productId.productName%></h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                                <% } %>
-                                                <% if (user.cart[1]) { %>
-                                                <tr>
-                                                    <td class="si-pic"><img src="<%=user.cart[1].productId.images[1]%>" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>₹<%=user.cart[1].productId.price%> x <%=user.cart[1].quantity%></p>
-                                                            <h6><%=user.cart[1].productId.productName%></h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                                <% } %>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="select-button">
-                                        <a href="/cart" class="primary-btn view-card">VIEW CARD</a>
-                                        <a href="/checkout" class="primary-btn checkout-btn">CHECK OUT</a>
-                                    </div>
+                                <i class="icon_bag_alt"></i>
+                                <% if (user.cart.length > 0) { %>
+                                    <span><%=user.cart.length%></span>
+                                <% } %>
+                            </a>
+                            <% if (user.cart.length !== 0) { %>
+                            <div class="cart-hover">
+                                <div class="select-items">
+                                    <table>
+                                        <tbody>
+                                            <% if (user.cart[0]) { %>
+                                            <tr>
+                                                <td class="si-pic"><img src="<%=user.cart[0].productId.images[1]%>" alt=""></td>
+                                                <td class="si-text">
+                                                    <div class="product-selected">
+                                                        <p>₹<%=user.cart[0].productId.price%> x <%=user.cart[0].quantity%></p>
+                                                        <h6><%=user.cart[0].productId.productName%></h6>
+                                                    </div>
+                                                </td>
+                                                <td class="si-close">
+                                                    <i class="ti-close"></i>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                            <% if (user.cart[1]) { %>
+                                            <tr>
+                                                <td class="si-pic"><img src="<%=user.cart[1].productId.images[1]%>" alt=""></td>
+                                                <td class="si-text">
+                                                    <div class="product-selected">
+                                                        <p>₹<%=user.cart[1].productId.price%> x <%=user.cart[1].quantity%></p>
+                                                        <h6><%=user.cart[1].productId.productName%></h6>
+                                                    </div>
+                                                </td>
+                                                <td class="si-close">
+                                                    <i class="ti-close"></i>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
                                 </div>
+                                <div class="select-button">
+                                    <a href="/cart" class="primary-btn view-card">VIEW CARD</a>
+                                    <a href="/checkout" class="primary-btn checkout-btn">CHECK OUT</a>
+                                </div>
+                            </div>
+                            <% } %>
                             </li>
                         </ul>
                     </div>
@@ -343,7 +346,7 @@
                             <div class="product-details">
                                 <div class="pd-title">
                                     <span><%= product.category.categoryName %></span>
-                                    <h3><%= product.productName %></h3>
+                                    <h3 class="text-capitalize"><%= product.productName %></h3>
                                     <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
                                 </div>
                                 <div class="pd-rating">
@@ -362,7 +365,7 @@
 
                                 <!-- form -->
                                 <form onsubmit="addToCart(event)">
-                                    <div class="pd-color">
+                                    <!-- <div class="pd-color">
                                         <h6>Color</h6>
                                         <div class="pd-color-choose">
                                             <div class="cc-item">
@@ -378,8 +381,8 @@
                                                 <label for="cc-violet" class="cc-violet"></label>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="pd-size-choose">
+                                    </div> -->
+                                    <div class="pd-size-choose pd-color">
                                         <% Object.keys(product.sizeAndStock).forEach(key => { %>
                                         <div class="sc-item">
                                             <% if (product.sizeAndStock[key] > 0) { %>

@@ -39,7 +39,10 @@ const couponSchema = new mongoose.Schema({
     },
     description: {
         type: String
-    }
+    },
+    usedBy: [{
+        type: mongoose.Schema.Types.ObjectId
+    }]
 });
 
 const Coupon = mongoose.model('Coupon', couponSchema);

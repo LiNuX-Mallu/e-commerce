@@ -44,7 +44,19 @@ const userSchema = new mongoose.Schema({
         quantity: {type: Number, required: true},
         size: {type: String, required: true},
         color: {type: String}
-    }]
+    }],
+    wallet: {
+        balance: {
+            type: Number,
+            default: 0
+        },
+        transcations: {
+            amount: Number,
+            date: Date,
+            details: String,
+            status: String
+        }
+    }
 });
 
 const User = mongoose.model('User', userSchema);

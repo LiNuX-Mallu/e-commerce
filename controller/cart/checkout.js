@@ -1,4 +1,5 @@
 const User = require('../../model/user');
+const {RAZOR_ID} = process.env;
 
 module.exports = async (req, res) => {
     if (!req.session.userLoggedIn) {
@@ -7,7 +8,7 @@ module.exports = async (req, res) => {
     try {
         const user = await User.findById(req.session.userId).populate({path: 'cart'}).populate({path: 'cart.productId', model: 'Product'});
         if (user) {
-            res.render('user/checkout', {user});
+            res.render('user/checkout', {user, RazorApiKey: RAZOR_ID});
         } else {
             throw new Error("Internal server error");
         }

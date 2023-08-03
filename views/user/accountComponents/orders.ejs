@@ -31,13 +31,7 @@
                     </p>
                 </div>
                 <div class="col-md-2 d-flex flex-column justify-content-center align-items-center p-4 gap-1">
-                    <button class="w-100 btn-sm btn bg-dark text-white p-0 ps-2 pe-2">View items</button>
-                    <% if (order.orderStatus === "confirmed" || order.orderStatus === "pending") { %>
-                    <button class="w-100 btn-sm btn bg-success text-white p-0 ps-2 pe-2">Track order</button>
-                    <button class="w-100 btn-sm btn bg-danger text-white p-0 ps-2 pe-2" onclick="cancelOrder('<%=order._id%>')">Cancel order</button>
-                    <% } else if (order.orderStatus === "delivered") { %>
-                    <button class="w-100 btn-sm btn bg-danger text-white p-0 ps-2 pe-2">Return order</button>
-                    <% } %>
+                    <a href="/view-order/<%=order.orderId%>" class="w-100 btn-sm btn bg-dark text-white p-0 ps-2 pe-2">View order</a>
                 </div>
                 <div class="col-md-3 d-flex flex-column justify-content-center align-items-start p-2">
                     <p class="fw-bold">Order status: 
@@ -61,7 +55,7 @@
                         <span style="color: rgb(204, 0, 0);"> <%=order.orderStatus%>&nbsp;<i class="fa fa-ban"></i></span><br>
                     <% } else if (order.orderStatus === "delivered") { %>
                         <% const deliveryDate = order.trackInfo.deliveryDate; %>
-                      <% const dayIndex = deliveryDate.getDay(); %>
+                        <% const dayIndex = deliveryDate.getDay(); %>
                         <% const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']; %>
                         <% const day = daysOfWeek[dayIndex]; %>
 
@@ -75,6 +69,8 @@
                         <span style="color: green;"> <%=order.orderStatus%>&nbsp;<i class="fa fa-truck"></i></span>
                         <br>
                         <span class="text-primary fw-normal">Delivered on <%=delivery%></span>
+                    <% } else { %>
+                        <span style="color: rgb(0, 134, 243);"> <%=order.orderStatus%>&nbsp;<i class="fa fa-clock"></i></span>
                     <% } %>
                     </p>
                 </div>

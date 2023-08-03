@@ -21,8 +21,12 @@ const removeFromCart = require('../controller/cart/remove-from-cart');
 const updateCartQuantity = require('../controller/cart/update-quantity');
 const checkout = require('../controller/cart/checkout');
 
+const viewOrder = require('../controller/order/view-order');
 const makeOrder = require('../controller/order/make-order');
 const cancelOrder = require('../controller/order/cancel-order');
+const returnOrder = require('../controller/order/return-order');
+const verifyPayment = require('../controller/order/verify-payment');
+const checkCoupon = require('../controller/order/check-coupon');
 
 const {userAuthenticate} = require('../middlewares');
 
@@ -41,7 +45,6 @@ router.get('/profile', userAuthenticate, profile);
 router.get('/address', userAuthenticate, address);
 router.get('/add-address', userAuthenticate, addAddress);
 
-router.get('/orders', userAuthenticate, orders);
 
 router.get('/shop', userAuthenticate, shop);
 
@@ -57,7 +60,13 @@ router.put('/update-cart-quantity', userAuthenticate, updateCartQuantity);
 router.get('/checkout', userAuthenticate, checkout);
 
 //order
+router.get('/orders', userAuthenticate, orders);
+router.get('/view-order/:orderId', userAuthenticate, viewOrder);
 router.post('/make-order', userAuthenticate, makeOrder);
 router.put('/cancel-order', userAuthenticate, cancelOrder);
+router.post('/order/verify-payment', userAuthenticate, verifyPayment);
+router.put('/return-order', userAuthenticate, returnOrder);
+
+router.post('/check-coupon', userAuthenticate, checkCoupon);
 
 module.exports = router;
