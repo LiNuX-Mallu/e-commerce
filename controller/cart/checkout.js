@@ -6,7 +6,16 @@ module.exports = async (req, res) => {
         return res.redirect('/login');
     }
     try {
-        const user = await User.findById(req.session.userId).populate({path: 'cart'}).populate({path: 'cart.productId', model: 'Product'});
+        const user = await User.findById(req.session.userId)
+        .populate({
+            path: 'cart.productId',
+            model: 'Product',
+            populate: {
+                path: 'category.categoryId',
+                model: 'Category'
+            }
+        });
+
         if (user) {
             res.render('user/checkout', {user, RazorApiKey: RAZOR_ID});
         } else {

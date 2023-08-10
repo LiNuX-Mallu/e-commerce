@@ -18,8 +18,8 @@ module.exports = async (req, res) => {
         womenCategory = await Category.findOne({categoryName: "women"});
         kidsCategory = await Category.findOne({categoryName: "kids"});
 
-        menProduct = await Product.find({"category.categoryName": "men", notAvailable: false});
-        womenProduct = await Product.find({"category.categoryName": "women", notAvailable: false});
+        menProduct = await Product.find({"category.categoryName": "men", notAvailable: false}).populate('category.categoryId', 'offer');
+        womenProduct = await Product.find({"category.categoryName": "women", notAvailable: false}).populate('category.categoryId', 'offer');
 
 
         if (!mainBanner || !instagramBanner || !menBanner || !womenBanner || !menCategory || !womenCategory || !kidsCategory || !menProduct || !womenProduct) {

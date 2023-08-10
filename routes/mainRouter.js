@@ -26,7 +26,10 @@ const makeOrder = require('../controller/order/make-order');
 const cancelOrder = require('../controller/order/cancel-order');
 const returnOrder = require('../controller/order/return-order');
 const verifyPayment = require('../controller/order/verify-payment');
+const verifyWallet = require('../controller/order/verify-wallet');
 const checkCoupon = require('../controller/order/check-coupon');
+
+const downloadInvoice = require('../controller/order/download-invoice');
 
 const {userAuthenticate} = require('../middlewares');
 
@@ -65,7 +68,9 @@ router.get('/view-order/:orderId', userAuthenticate, viewOrder);
 router.post('/make-order', userAuthenticate, makeOrder);
 router.put('/cancel-order', userAuthenticate, cancelOrder);
 router.post('/order/verify-payment', userAuthenticate, verifyPayment);
+router.post('/order/verify-wallet', userAuthenticate, verifyWallet);
 router.put('/return-order', userAuthenticate, returnOrder);
+router.post('/download-invoice', userAuthenticate, downloadInvoice);
 
 router.post('/check-coupon', userAuthenticate, checkCoupon);
 

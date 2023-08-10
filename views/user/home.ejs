@@ -60,58 +60,17 @@
                         <ul class="nav-right">
                             <li>
                                 <span>₹<%=user.wallet.balance%></span>
-                                <a href="/wallet">
+                                <a>
                                     <i class="fa-solid fa-wallet text-dark"></i>
                                 </a>
                             </li>
-                            <li class="cart-icon"><a href="/cart">
-                                <i class="icon_bag_alt"></i>
-                                <% if (user.cart.length > 0) { %>
-                                    <span><%=user.cart.length%></span>
-                                <% } %>
-                            </a>
-                            <% if (user.cart.length !== 0) { %>
-                            <div class="cart-hover">
-                                <div class="select-items">
-                                    <table>
-                                        <tbody>
-                                            <% if (user.cart[0]) { %>
-                                            <tr>
-                                                <td class="si-pic"><img src="<%=user.cart[0].productId.images[1]%>" alt=""></td>
-                                                <td class="si-text">
-                                                    <div class="product-selected">
-                                                        <p>₹<%=user.cart[0].productId.price%> x <%=user.cart[0].quantity%></p>
-                                                        <h6><%=user.cart[0].productId.productName%></h6>
-                                                    </div>
-                                                </td>
-                                                <td class="si-close">
-                                                    <i class="ti-close"></i>
-                                                </td>
-                                            </tr>
-                                            <% } %>
-                                            <% if (user.cart[1]) { %>
-                                            <tr>
-                                                <td class="si-pic"><img src="<%=user.cart[1].productId.images[1]%>" alt=""></td>
-                                                <td class="si-text">
-                                                    <div class="product-selected">
-                                                        <p>₹<%=user.cart[1].productId.price%> x <%=user.cart[1].quantity%></p>
-                                                        <h6><%=user.cart[1].productId.productName%></h6>
-                                                    </div>
-                                                </td>
-                                                <td class="si-close">
-                                                    <i class="ti-close"></i>
-                                                </td>
-                                            </tr>
-                                            <% } %>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="select-button">
-                                    <a href="/cart" class="primary-btn view-card">VIEW CARD</a>
-                                    <a href="/checkout" class="primary-btn checkout-btn">CHECK OUT</a>
-                                </div>
-                            </div>
-                            <% } %>
+                            <li class="cart-icon">
+                                <a href="/cart">
+                                    <i class="icon_bag_alt"></i>
+                                    <% if (user.cart.length > 0) { %>
+                                        <span><%=user.cart.length%></span>
+                                    <% } %>
+                                </a>
                             </li>
                         </ul>
                         <% } %>
@@ -275,8 +234,10 @@
                                     <h5><%=product.productName%></h5>
                                 </a>
                                 <div class="product-price">
-                                    ₹<%=product.price-1%>
-                                    <span>₹<%=product.price%></span>
+                                    ₹<%= product.price - (product.price * (product.offer / 100)) - (product.price * (product.category.categoryId.offer / 100)) %>
+                                    <% if (product.offer || product.category.categoryId.offer) { %>
+                                        <span>₹<%= product.price %></span>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
@@ -358,8 +319,10 @@
                                     <h5><%=product.productName%></h5>
                                 </a>
                                 <div class="product-price">
-                                    ₹<%=product.price-1%>
-                                    <span>₹<%=product.price%></span>
+                                    ₹<%= product.price - (product.price * (product.offer / 100)) - (product.price * (product.category.categoryId.offer / 100)) %>
+                                    <% if (product.offer || product.category.categoryId.offer) { %>
+                                        <span>₹<%= product.price %></span>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>

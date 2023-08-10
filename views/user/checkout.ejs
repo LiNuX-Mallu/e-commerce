@@ -222,7 +222,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="discount-coupon">
-                            <h6>Discount Codes &nbsp;<span id="couponInfo"></span></h6>
+                            <h6>Coupon code &nbsp;<span id="couponInfo"></span></h6>
                             <div class="coupon-form">
                                 <input style="text-transform: uppercase; color: rgb(58, 58, 58); font-weight: 700;" type="text" id="couponCode" placeholder="Enter your codes" name="couponCode">
                                 <button onclick="checkCoupon()" type="button" class="site-btn coupon-btn">Apply</button>
@@ -236,8 +236,8 @@
                                     <% let total = 0; %>
                                     <li>Product <span>Total</span></li>
                                     <% user.cart.forEach(item => { %>
-                                        <% total += item.productId.price * item.quantity; %>
-                                        <li class="fw-normal"><%= item.productId.productName %> &nbsp; <code>X</code> &nbsp;  <%= item.quantity %> <span>₹<%= item.productId.price * item.quantity %></span></li>
+                                        <% total += (item.productId.price - ((item.productId.price * item.productId.category.categoryId.offer) / 100) - ((item.productId.price * item.productId.offer) / 100)) * item.quantity; %>
+                                        <li class="fw-normal"><%= item.productId.productName %> &nbsp; <code>X</code> &nbsp;  <%= item.quantity %> <span>₹<%= (item.productId.price - ((item.productId.price * item.productId.category.categoryId.offer) / 100) - ((item.productId.price * item.productId.offer) / 100)) * item.quantity %></span></li>
                                     <% }); %>
                                     <li class="fw-bold">Subtotal <span>₹<%= total %></span></li>
                                     <li class="text-black">Delivery charge<span>₹40</span></li>
@@ -245,6 +245,13 @@
                                     <li class="total-price">Total <span class="text-success"> ₹<span class="text-success" id="totalValue"><%=total + 40%></span></span></li>
                                 </ul>
                                 <div class="payment-check">
+                                    <div class="pc-item">
+                                        <label for="pc-wallet">
+                                            Wallet
+                                            <input value="walletPay" type="radio" id="pc-wallet" name="paymentMethod">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
                                     <div class="pc-item">
                                         <label for="pc-paypal">
                                             Razorpay
@@ -481,6 +488,46 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                         timer: 1500,
                     });
                     window.location.href = `/view-order/${response.data.order.orderId}`;
+                } else if (response.status === 200 && data.get('paymentMethod')  === "walletPay") {
+                    const result = await Swal.fire({
+                        title: "Confirm payment",
+                        text: `RS: ${response.data.order.totalAmount} will be debited from your wallet`,
+                        icon: 'info',
+                        showCancelButton: true,
+                        confirmButtonColor: 'MediumSeaGreen',
+                        cancelButtonColor: 'Tomato',
+                        confirmButtonText: 'Pay amount'
+                    });
+                    try {
+                        const verifyResponse = await axios.post('/order/verify-wallet', {result: result.isConfirmed, orderId: response.data.order['_id']}, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                        });
+                        if (verifyResponse.status === 200) {
+                            await Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Order successfull',
+                                timer: 1500,
+                            });
+                            window.location.href = `/view-order/${verifyResponse.data.orderId}`;
+                        }
+                    } catch(err) {
+                        if (err.response?.status === 400) {
+                            await Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Insufficient balance',
+                            });
+                        } else {
+                            await Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Internal server error',
+                            });
+                        }
+                    }
                 }
             } catch(err) {
                 await Swal.fire({

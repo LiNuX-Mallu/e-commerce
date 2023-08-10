@@ -18,12 +18,12 @@ module.exports = async (req, res) => {
         });
 
         if (!bool) {
-            if (item.quantity > 0) {
+            if (item.quantity > 1) {
                 item.quantity--;
                 await user.save();
                 res.status(200).end();
             } else {
-                return res.status(400).json({error: "Cannot be lesser than 0"})
+                return res.status(400).json({error: "Cannot be lesser than 1"})
             }
         } else {
             const product = await Product.findById(productId);

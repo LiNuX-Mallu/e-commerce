@@ -61,7 +61,7 @@
               <label class="form-label">
                 Category name:
               </label>
-              <input type="text" class="form-control" value="<%= category.categoryName %>" name="categoryName">
+              <input type="text" class="form-control" value="<%=category.categoryName%>" name="categoryName">
               <p class="text-danger p-2" id="nameError"></p>
             </div>
 
@@ -69,8 +69,19 @@
               <label class="form-label">
                 Description:
               </label>
-              <textarea rows="4" class="form-control" name="description"><%= category.description %></textarea>
+              <textarea rows="4" class="form-control" name="description"><%=category.description%></textarea>
               <p class="text-danger p-2" id="descriptionError"></p>
+            </div>
+
+            <div class="from-group mt-4">
+              <label class="form-label">
+                Offer:
+              </label>
+              <div class="input-group">
+                <span class="input-group-text">%</span>
+                <input type="Number" value="<%=category.offer%>" class="form-control" name="offer">
+              </div>
+              <p class="text-danger p-2" id="offerError"></p>
             </div>
 
             <div class="w-100 p-5">

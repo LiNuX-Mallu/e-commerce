@@ -70,23 +70,23 @@
               </label>
               <div class="input-group">
                 <span class="input-group-text w-10">XS</span>
-                <input class="form-control" name="sizeAndStock[XS]" value="<%= product.sizeAndStock.XS %>">
+                <input class="form-control" name="sizeAndStock[XS]" value="<%=product.sizeAndStock.XS%>">
               </div>
               <div class="input-group">
                 <span class="input-group-text w-10">S </span>
-                <input class="form-control" name="sizeAndStock[S]" value="<%= product.sizeAndStock.S %>">
+                <input class="form-control" name="sizeAndStock[S]" value="<%=product.sizeAndStock.S%>">
               </div>
               <div class="input-group">
                 <span class="input-group-text w-10">M </span>
-                <input class="form-control" name="sizeAndStock[M]" value="<%= product.sizeAndStock.M %>">
+                <input class="form-control" name="sizeAndStock[M]" value="<%=product.sizeAndStock.M%>">
               </div>
               <div class="input-group">
                 <span class="input-group-text w-10">L </span>
-                <input class="form-control" name="sizeAndStock[L]" value="<%= product.sizeAndStock.L %>">
+                <input class="form-control" name="sizeAndStock[L]" value="<%=product.sizeAndStock.L%>">
               </div>
               <div class="input-group">
                 <span class="input-group-text w-10">XL </span>
-                <input class="form-control" name="sizeAndStock[XL]" value="<%= product.sizeAndStock.XL %>">
+                <input class="form-control" name="sizeAndStock[XL]" value="<%=product.sizeAndStock.XL%>">
               </div>
               <p class="text-danger p-2" id="sizeError"></p>
             </div>
@@ -97,9 +97,20 @@
               </label>
               <div class="input-group">
                 <span class="input-group-text">₹</span>
-                <input type="text" class="form-control" value="<%= product.price %>" name="price">
+                <input type="text" class="form-control" value="<%=product.price%>" name="price">
               </div>
               <p class="text-danger p-2" id="priceError"></p>
+            </div>
+
+            <div class="from-group mt-4">
+              <label class="form-label">
+                Offer:
+              </label>
+              <div class="input-group">
+                <span class="input-group-text">%</span>
+                <input type="Number" class="form-control" value="<%=product.offer%>" name="offer">
+              </div>
+              <p class="text-danger p-2" id="offerError"></p>
             </div>
 
             <div class="w-100 p-5">

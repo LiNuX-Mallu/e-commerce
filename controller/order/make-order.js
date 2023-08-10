@@ -56,20 +56,20 @@ module.exports = async (req, res) => {
         formData.totalAmount = 0;
 
         for (const item of user.cart) {
-            const product = await Product.findById(item.productId);
+            const product = await Product.findById(item.productId).populate('category.categoryId', 'offer');
             const orderItem = {
                 productId: item.productId,
                 quantity: item.quantity,
-                price: product.price * item.quantity,
+                price: (product.price - ((product.price * product.category.categoryId.offer) / 100) - ((product.price * product.offer) / 100)) * item.quantity,
                 size: item.size,
                 color: item.color
             };
             formData.orderItems.push(orderItem);
-            formData.totalAmount += product.price * item.quantity;
+            formData.totalAmount += (product.price - ((product.price * product.category.categoryId.offer) / 100) - ((product.price * product.offer) / 100)) * item.quantity;
         };
         formData.totalAmount += 40;
         
-        if (req.body.paymentMethod === "razorpay") {
+        if (req.body.paymentMethod === "razorpay" || req.body.paymentMethod === "walletPay") {
             formData.paymentStatus = "pending";
             formData.orderStatus = "pending";
         } else if (req.body.paymentMethod === "cod") {

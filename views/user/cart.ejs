@@ -121,14 +121,14 @@
                             <tbody>
                                 <% let total = 0; %>
                                 <% user.cart.forEach(item => { %>
-                                <% total += item.productId.price * item.quantity; %>
+                                <% total += (item.productId.price - ((item.productId.price * item.productId.category.categoryId.offer) / 100) - ((item.productId.price * item.productId.offer) / 100)) * item.quantity; %>
                                 <tr id="row-<%=item._id%>" class="border-bottom border-gray-100">
                                     <td style="padding-left: 3%;" class="cart-pic first-row"><img src="<%=item.productId.images[1]%>" alt=""></td>
                                     <td style="font-weight: 600;" class="text-capitalize first-row">
                                         <%= item.productId.productName %>
                                     </td>
                                     <td class="total-price first-row"><%= item.size %></td>
-                                    <td class="p-price first-row">₹<%=item.productId.price%></td>
+                                    <td class="p-price first-row">₹<%=(item.productId.price - ((item.productId.price * item.productId.category.categoryId.offer) / 100) - ((item.productId.price * item.productId.offer) / 100))%></td>
                                     <td class="qua-col first-row">
                                         <div class="quantity">
                                             <div class="border">
@@ -138,7 +138,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="total-price first-row">₹<%= item.productId.price * item.quantity %></td>
+                                    <td class="total-price first-row">₹<%=(item.productId.price - ((item.productId.price * item.productId.category.categoryId.offer) / 100) - ((item.productId.price * item.productId.offer) / 100)) * item.quantity%></td>
                                     <td class="close-td first-row">
                                         <button onclick="removeFromCart('<%=item._id%>')" class="border-0 bg-transparent">
                                             <i class="fa fa-trash-alt text-danger"></i>
@@ -307,6 +307,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 const response = await axios.delete(`/remove-from-cart/${itemId}`);
                 if (response.status === 200) {
                     document.getElementById(`row-${itemId}`).remove();
+                    window.location.reload();
                 } else {
                     throw new Error();
                 }

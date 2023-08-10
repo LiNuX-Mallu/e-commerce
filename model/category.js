@@ -18,6 +18,10 @@ const categorySchema = new mongoose.Schema({
     notAvailable: {
         type: Boolean,
         default: false
+    },
+    offer: {
+        type: Number,
+        default: 0
     }
 });
 

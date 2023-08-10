@@ -62,7 +62,7 @@ module.exports = async (req, res) => {
         if (page > totalPages) {
             result = [];
         } else {
-            result = await Product.find(query).sort(sortOption).skip(startIndex).limit(perPage);
+            result = await Product.find(query).sort(sortOption).skip(startIndex).limit(perPage).populate('category.categoryId');
         }          
 
     } catch(err) {

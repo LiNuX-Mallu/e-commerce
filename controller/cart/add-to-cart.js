@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
             const stock = (+quantity) + (+existingItem.quantity);
 
             if (productDetails.sizeAndStock[req.body.size] < stock) {
-                return res.status(400).json({error: "Stock is limited", option: `you can pick upto ${productDetails.sizeAndStock[req.body.size] - existingItem.quantity}`});
+                return res.status(404).json({error: "We are sorry, stock unavailable", option: `you can pick upto ${productDetails.sizeAndStock[req.body.size] - existingItem.quantity}`});
             }
 
             const increment = await User.updateOne(
@@ -39,14 +39,14 @@ module.exports = async (req, res) => {
         }
 
         if (productDetails.sizeAndStock[req.body.size] < quantity) {
-            return res.status(404).json({error: "Stock is limited", option: `You can pick upto ${productDetails.sizeAndStock[req.body.size]}`});
+            return res.status(404).json({error: "We are sorry, stock unavailable", option: `You can pick upto ${productDetails.sizeAndStock[req.body.size]}`});
         }
         const user = await User.findById(req.session.userId);
         if (user) {
             user.cart.push(product);
             const added = await user.save();
             if (added) {
-                res.status(200).json({message: "Added to cart"});
+                res.status(200).json({message: "Added to cart", length: user.cart.length});
             } else {
                 throw new Error("couldn't add to cart");
             }

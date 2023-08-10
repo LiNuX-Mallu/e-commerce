@@ -8,6 +8,9 @@ const login = require('../controller/template/admin/admin-login');
 const logout = require('../controller/admin/logout');
 const adminLogin = require('../controller/admin/admin-login.js');
 const adminPanel = require('../controller/template/admin/panel');
+const datedOrders = require('../controller/admin/dated-orders.js');
+const downloadreport = require('../controller/admin/download-report');
+
 const {viewCustomers, blockCustomer} = require('../controller/template/admin/customers');
 const products = require('../controller/template/admin/products');
 const category = require('../controller/template/admin/category');
@@ -53,6 +56,8 @@ router.get('/login', login);
 router.post('/admin-login', adminLogin);
 router.get('/panel', authenticate, adminPanel);
 router.get('/logout', adminAuthenticate, logout);
+router.get('/dated-orders', adminAuthenticate, datedOrders);
+router.post('/download-sales-report', authenticate, downloadreport);
 
 router.get('/customers', authenticate, viewCustomers);
 router.put('/block-customer', authenticate, blockCustomer);

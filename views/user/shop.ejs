@@ -23,6 +23,10 @@
     <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.js"></script>
+
 </head>
 
 <body>
@@ -61,60 +65,18 @@
                         <ul class="nav-right">
                             <li>
                                 <span>₹<%=user.wallet.balance%></span>
-                                <a href="/wallet">
+                                <a>
                                     <i class="fa-solid fa-wallet text-dark"></i>
                                 </a>
                             </li>
-                            <li class="cart-icon"><a href="/cart">
+                            <li class="cart-icon">
+                                <a href="/cart">
                                     <i class="icon_bag_alt"></i>
                                     <% if (user.cart.length > 0) { %>
                                         <span><%=user.cart.length%></span>
                                     <% } %>
                                 </a>
-                                <% if (user.cart.length !== 0) { %>
-                                <div class="cart-hover">
-                                    <div class="select-items">
-                                        <table>
-                                            <tbody>
-                                                <% if (user.cart[0]) { %>
-                                                <tr>
-                                                    <td class="si-pic"><img src="<%=user.cart[0].productId.images[1]%>" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>₹<%=user.cart[0].productId.price%> x <%=user.cart[0].quantity%></p>
-                                                            <h6><%=user.cart[0].productId.productName%></h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                                <% } %>
-                                                <% if (user.cart[1]) { %>
-                                                <tr>
-                                                    <td class="si-pic"><img src="<%=user.cart[1].productId.images[1]%>" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>₹<%=user.cart[1].productId.price%> x <%=user.cart[1].quantity%></p>
-                                                            <h6><%=user.cart[1].productId.productName%></h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                                <% } %>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="select-button">
-                                        <a href="/cart" class="primary-btn view-card">VIEW CARD</a>
-                                        <a href="/checkout" class="primary-btn checkout-btn">CHECK OUT</a>
-                                    </div>
-                                </div>
-                                <% } %>
                             </li>
-                            <!-- <li class="cart-price">₹150.00</li> -->
                         </ul>
                     </div>
                     <% } %>
@@ -357,7 +319,7 @@
                                         </div>
                                         <ul>
                                             <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                            <li class="quick-view"><a href="/product/<%= product._id %>">+ Quick View</a></li>
+                                            <li class="quick-view"><a href="/product/<%=product._id%>">+ Quick View</a></li>
                                             <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                         </ul>
                                     </div>
@@ -367,8 +329,10 @@
                                             <h5 class="text-capitalize"><%= product.productName %></h5>
                                         </a>
                                         <div class="product-price">
-                                            ₹<%= product.price - 1 %>
-                                            <span><%= product.price %></span>
+                                            ₹<%= product.price - (product.price * (product.offer / 100)) - (product.price * (product.category.categoryId.offer / 100)) %>
+                                            <% if (product.offer || product.category.categoryId.offer) { %>
+                                            <span>₹<%= product.price %></span>
+                                            <% } %>
                                         </div>
                                     </div>
                                 </div>
@@ -552,9 +516,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                                 <h5 class="text-capitalize">${product.productName}</h5>
                                             </a>
                                             <div class="product-price">
-                                                ₹${product.price - 1}
-                                                <span>${product.price}</span>
-                                            </div>
+                                            ₹${product.price - (product.price * (product.offer / 100)) - (product.price * (product.category.categoryId.offer / 100))}
+                                            ${(product.offer || product.category.categoryId.offer) ? '<span>₹'+product.price+'</span>' : ''}
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
