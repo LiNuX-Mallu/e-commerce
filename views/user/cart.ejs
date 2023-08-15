@@ -24,6 +24,9 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.js"></script>
 </head>
 
 <body>
@@ -327,7 +330,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                     window.location.reload();
                 }
             } catch(err) {
-                alert(err.response?.data?.error || err);
+                await Swal.fire(`${err.response?.data?.error}` || "Internal server error");
             }
         }
     </script>

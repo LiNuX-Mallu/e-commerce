@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
                     throw new Error("updated product stock error");
                 }
             }
-            if (order.paymentMethod === "razorpay") {
+            if (order.paymentMethod === "razorpay" || order.paymentMethod === "walletPay") {
                 const user = await User.findById(req.session.userId);
                 if (user) {
                     user.wallet.balance += order.totalAmount - order.couponMoney;
