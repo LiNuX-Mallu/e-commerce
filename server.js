@@ -49,7 +49,7 @@ app.use('/user', userRouter);
 app.use('/otp', otpRouter);
 app.use('/admin', adminRouter);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 
 (async () => {
     try {
