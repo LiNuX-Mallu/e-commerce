@@ -1,0 +1,10 @@
+steps:
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone', '--depth', '1', 'https://github.com/LiNuX-Mallu/e-commerce.git', '.']
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['run', 'deploy', 'e-commerce', '--image', 'gcr.io/our-time-396005/e-commerce', '--platform', 'managed', '--region', 'asia-south1', '--set-env-vars', 'GITHUB_TOKEN=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']
+  secretEnv: ['GITHUB_TOKEN']
+
+substitutions:
+  _GITHUB_TOKEN: projects/our-time-396005/secrets/GCLOUD_GITHUB_TOKEN/versions/latest
