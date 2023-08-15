@@ -1,6 +1,3 @@
 steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['run', 'deploy', 'e-commerce', '--image', 'gcr.io/cloudrun/hello:latest', '--platform', 'managed', '--region', 'asia-east1', '--allow-unauthenticated']
-
-substitutions:
-  _GITHUB_TOKEN: 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
