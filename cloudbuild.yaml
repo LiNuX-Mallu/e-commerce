@@ -1,8 +1,6 @@
 steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['run', 'deploy', 'e-commerce', '--image', 'gcr.io/cloudrun/zokso:latest', '--platform', 'managed', '--region', 'asia-east1', '--allow-unauthenticated']
-  id: 'Deploy to Cloud Run'
-  waitFor: ['Build and push Docker image']
   entrypoint: 'server.js'
   dir: 'deploy'
   env:
