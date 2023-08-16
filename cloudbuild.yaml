@@ -7,8 +7,3 @@ steps:
   dir: 'deploy'
   env:
     - 'NODE_ENV=production'
-
-options:
-  machineType: 'E2_HIGHCPU_4' 
-  logging: CLOUD_LOGGING_ONLY
-
