@@ -11,5 +11,4 @@ steps:
 options:
   machineType: 'N1_HIGHCPU_8'
   logging: CLOUD_LOGGING_ONLY
-  serviceAccount: 17749633480@cloudbuild.gserviceaccount.com@zokso-396012.iam.gserviceaccount.com
 
