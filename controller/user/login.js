@@ -16,6 +16,9 @@ module.exports = async (req, res) => {
         } else {
             response = await User.findOne({phone: user});
         }
+        if (!response) {
+            return res.status(400).json({error: "Incorrect email address or password"});
+        }
         if (await bcrypt.compare(password, response.password)) {
             req.session.userLoggedIn = true;
             req.session.userId = response._id;
@@ -33,13 +36,13 @@ module.exports = async (req, res) => {
             res.status(200).json({error: "login succcessfull"});
         } else {
             if (isString) {
-                res.status(400).json({error: "incorrect email address or password"});
+                res.status(400).json({error: "Incorrect email address or password"});
             } else {
-                res.status(400).json({error: "incorrect phone number or password"});
+                res.status(400).json({error: "Incorrect phone number or password"});
             }
         }
     } catch (err) {
         console.log(err);
-        res.status(500).json({error: "internal server error"});
+        res.status(500).json({error: "Internal server error"});
     }
 }
