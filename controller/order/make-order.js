@@ -87,6 +87,12 @@ module.exports = async (req, res) => {
             }
         }
 
+        if (formData.totalAmount < 0) {
+            formData.totalAmount = 0;
+            formData.paymentStatus = "success";
+            formData.orderStatus = "confirmed";
+            formData.paymentMethod = "none";
+        }
 
         const currentDate = new Date();
         const deliveryDate = new Date(currentDate);
@@ -96,8 +102,7 @@ module.exports = async (req, res) => {
         const newOrder = new Order(formData);
         const ordered = await newOrder.save();
         if (ordered) {
-            res.status(200).json({order: ordered});
-            if (req.body.paymentMethod === "cod") {
+            if (req.body.paymentMethod === "cod" || formData.paymentMethod === "none") {
                 const stockUpdater = user.cart.map(async (item) => {
                     const product = await Product.findById(item.productId);
                     product.sizeAndStock[item.size] -= item.quantity;
@@ -107,6 +112,7 @@ module.exports = async (req, res) => {
                 user.cart = [];
                 await user.save();
             }
+            res.status(200).json({order: ordered});
         } else {
             throw new Error();
         }

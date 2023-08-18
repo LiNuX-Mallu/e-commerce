@@ -52,7 +52,7 @@
                         <div class="advanced-search">
                             <button type="button" class="category-btn">All Categories</button>
                             <form action="/shop?size=<%=size%>&category=<%=category%>&priceRange=<%=priceRange%>&sort=<%=sort%>" method="GET" class="input-group">
-                                <input name="keyword" placeholder="What do you need?">
+                                <input name="keyword" placeholder="What do you need?" <% if (keyword) { %> value=<%=keyword%> <% } %>>
                                 <input hidden name="category" value="<%=category%>">
                                 <input hidden name="size" value="<%=size%>">
                                 <input hidden name="priceRange" value="<%=priceRange%>">
@@ -308,7 +308,6 @@
                                         <ul>
                                             <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
                                             <li class="quick-view"><a href="/product/<%=product._id%>">+ Quick View</a></li>
-                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="pi-text">

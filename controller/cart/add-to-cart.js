@@ -2,6 +2,9 @@ const User = require('../../model/user');
 const Product = require('../../model/product');
 
 module.exports = async (req, res) => {
+    if (!req.session.userLoggedIn) {
+        return res.status(303).end();
+    }
     const {quantity} = req.body;
     if (!req.body.size) {
         return res.status(400).json({error: "please choose a size"});

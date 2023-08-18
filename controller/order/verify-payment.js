@@ -12,7 +12,6 @@ const rzp = new razorpay({
 
 module.exports = async (req, res) => {
     const {orderId, paymentResponse} = req.body;
-    
     try {
         const user = await User.findById(req.session.userId);
         if (!user) {

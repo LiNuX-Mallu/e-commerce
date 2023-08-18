@@ -228,7 +228,11 @@
                                     <li class="fw-bold">Subtotal <span>₹<%= total %></span></li>
                                     <li class="text-black">Delivery charge<span>₹40</span></li>
                                     <li id="couponLi" class="text-success"></li>
-                                    <li class="total-price">Total <span class="text-success"> ₹<span class="text-success" id="totalValue"><%=total + 40%></span></span></li>
+                                    <% if ((total + 40) >= 1) { %>
+                                        <li class="total-price">Total <span class="text-success"> ₹<span class="text-success" id="totalValue"><%= total + 40 %></span></span></li>
+                                    <% } else { %>
+                                        <li class="total-price">Total <span class="text-success"> ₹<span class="text-success" id="totalValue">0</span></span></li>
+                                    <% } %>
                                 </ul>
                                 <div class="payment-check">
                                     <div class="pc-item">
@@ -365,7 +369,16 @@
                         'Content-Type': 'application/json'
                     }
                 });
-                if (response.status === 200 && data.get('paymentMethod') === "razorpay") {
+                if (response.status === 200 && data.get('paymentMethod') === "cod" || response.data.order.paymentMethod === "none") {
+                    await Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Order successfull',
+                        timer: 1500,
+                    });
+                    return window.location.href = `/view-order/${response.data.order.orderId}`;
+
+                } else if (response.status === 200 && data.get('paymentMethod') === "razorpay") {
                     try {
                         const paymentResponse = await razorPayment(response.data.order);
                         const verifyResponse = await axios.post('/order/verify-payment', {paymentResponse, orderId: response.data.order._id}, {
@@ -395,14 +408,6 @@
                             text: 'Payment failed',
                         });
                     }
-                } else if (response.status === 200 && data.get('paymentMethod') === "cod") {
-                    await Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Order successfull',
-                        timer: 1500,
-                    });
-                    window.location.href = `/view-order/${response.data.order.orderId}`;
                 } else if (response.status === 200 && data.get('paymentMethod')  === "walletPay") {
                     const result = await Swal.fire({
                         title: "Confirm payment",
@@ -468,7 +473,7 @@
                 if (response.status === 200) {
                     document.getElementById('couponInfo').innerHTML = `<span class="text-success fw-bold">Coupon accepted</span>`;
                     document.getElementById('couponLi').innerHTML = `Coupon <span>₹${response.data.money}</span>`;
-                    document.getElementById('totalValue').textContent = document.getElementById('totalValue').textContent - response.data.money;
+                    document.getElementById('totalValue').textContent = (document.getElementById('totalValue').textContent - response.data.money >= 1) ? document.getElementById('totalValue').textContent - response.data.money : 0; 
                 } else {
                     throw new Error();
                 }
