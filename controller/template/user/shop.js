@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
         if (req.query.category && req.query.category !== 'false') {
             category = req.query.category;
             query["category.categoryName"] = category;
-        } else {
+        } else {     
             category = false;
         }
 

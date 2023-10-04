@@ -31,7 +31,7 @@ const forgotPass = async (req, res) => {
                 from: MAIL_ID,
                 to: userExist.email,
                 subject: "Password reset link from Zokso Clothing",
-                text: `http://localhost:5000/reset-password/${uuid}
+                text: `http://zokso.online/reset-password/${uuid}
                 link is only valid for 5 minutes!`,
             });
             if (sendResponse) {
