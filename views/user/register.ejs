@@ -229,7 +229,7 @@
                 });
                 if (response.status === 200) {
                     alert(response.data.message);
-                    window.location.href = `/verify/${email}/${phone}`;
+                    window.location.href = `/verify/${email}/false`;
                 }
             } catch(err) {
                 if (err.response.status == 400) {

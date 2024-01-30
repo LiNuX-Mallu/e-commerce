@@ -50,11 +50,12 @@ app.use('/otp', otpRouter);
 app.use('/admin', adminRouter);
 
 const port = process.env.PORT;
+const host = process.env.HOST;
 
 (async () => {
     try {
         await connectDB();
-        app.listen(port, () => {
+        app.listen(port, host,  () => {
             console.log(`server running: ${port}`);
         });
     } catch(err) {
